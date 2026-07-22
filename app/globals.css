@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-saffron: #f4a024;
+    --brand-maroon: #6b1f2e;
+    --brand-gold: #c9a961;
+    --brand-cream: #fbf6ec;
+    --brand-ink: #1f1a18;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-white text-brand-ink font-sans;
+    font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv11';
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-brand-maroon;
+  }
+
+  ::selection {
+    @apply bg-brand-saffron/30 text-brand-maroon-deep;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { @apply bg-brand-cream; }
+  ::-webkit-scrollbar-thumb { @apply bg-brand-maroon/40 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-brand-maroon/70; }
+}
+
+@layer components {
+  .container-x {
+    @apply max-w-7xl mx-auto px-5 sm:px-8 lg:px-12;
+  }
+
+  .section {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .section-tight {
+    @apply py-14 md:py-20;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-saffron-dark;
+  }
+
+  .eyebrow-gold {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-gold;
+  }
+
+  .heading-xl {
+    @apply font-serif text-display-xl font-medium text-brand-maroon;
+  }
+
+  .heading-lg {
+    @apply font-serif text-display-lg font-medium text-brand-maroon;
+  }
+
+  .heading-md {
+    @apply font-serif text-display-md font-medium text-brand-maroon;
+  }
+
+  .body-lg {
+    @apply text-lg md:text-xl text-brand-ink/80 leading-relaxed;
+  }
+
+  .gold-rule {
+    @apply h-px w-24 bg-gold-divider;
+  }
+
+  .gold-rule-wide {
+    @apply h-px w-full bg-gold-divider;
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 hover:-translate-y-1 hover:shadow-soft-lg;
+  }
+
+  .accent-italic {
+    @apply font-serif italic text-brand-saffron-dark;
+  }
+
+  /* Decorative mandala corner motif */
+  .motif-corner {
+    @apply pointer-events-none absolute opacity-[0.06] text-brand-maroon;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.12 0 0 0 0 0.18 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  .scroll-snap-x {
+    scroll-snap-type: x mandatory;
+  }
+  .scroll-snap-x > * { scroll-snap-align: start; }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
