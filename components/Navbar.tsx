@@ -27,21 +27,9 @@ const socialIcon: Record<string, (p: any) => JSX.Element> = {
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState<string | null>(null);
-
-  const isHome = pathname === '/';
-  // On the home page we start transparent over the hero; everywhere else we are solid.
-  const transparent = isHome && !scrolled && !drawerOpen;
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     setDrawerOpen(false);
@@ -60,27 +48,26 @@ export default function Navbar() {
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-    <div className={cn('relative z-50', transparent ? '' : 'shadow-soft')}>
-      {/* Utility bar — desktop only */}
-      <div
-        className={cn(
-          'hidden lg:block border-b transition-colors duration-300',
-          transparent
-            ? 'bg-transparent border-white/10 text-white/90'
-            : 'bg-brand-maroon-deep text-white/85 border-brand-maroon',
-        )}
-      >
-        <div className="container-x flex h-9 items-center justify-between text-xs">
+    <div className="sticky top-0 z-50 shadow-soft">
+      {/* Utility top bar */}
+      <div className="hidden lg:block bg-brand-maroon-deep text-white/90 border-b border-brand-maroon">
+        <div className="container-x flex h-9 items-center justify-between text-xs font-medium">
           <div className="flex items-center gap-6">
-            <a href={`tel:${brand.phone.replace(/\s/g, '')}`} className="inline-flex items-center gap-2 hover:text-brand-gold">
+            <a
+              href={`tel:${brand.phone.replace(/\s/g, '')}`}
+              className="inline-flex items-center gap-2 hover:text-brand-gold transition-colors"
+            >
               <IconPhone width={14} height={14} /> {brand.phone}
             </a>
-            <a href={`mailto:${brand.email}`} className="inline-flex items-center gap-2 hover:text-brand-gold">
+            <a
+              href={`mailto:${brand.email}`}
+              className="inline-flex items-center gap-2 hover:text-brand-gold transition-colors"
+            >
               <IconMail width={14} height={14} /> {brand.email}
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <span className="opacity-70">Follow us</span>
+            <span className="opacity-75">Follow us</span>
             {social.map((s) => {
               const Icon = socialIcon[s.icon] ?? IconInstagram;
               return (
@@ -100,19 +87,12 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main bar */}
-      <header
-        className={cn(
-          'sticky top-0 z-40 transition-all duration-300',
-          transparent
-            ? 'bg-transparent'
-            : 'bg-white/95 backdrop-blur-md border-b border-brand-line',
-        )}
-      >
+      {/* Main navigation bar */}
+      <header className="bg-white/95 backdrop-blur-md border-b border-brand-line">
         <nav className="container-x flex h-20 items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0" aria-label={brand.name}>
-            <div className="relative h-11 w-11 overflow-hidden rounded-full ring-2 ring-brand-gold/60">
+            <div className="relative h-11 w-11 overflow-hidden rounded-full ring-2 ring-brand-gold/60 shadow-sm">
               <Image
                 src="/images/logo.png"
                 alt={brand.name}
@@ -123,27 +103,17 @@ export default function Navbar() {
               />
             </div>
             <div className="leading-tight">
-              <div
-                className={cn(
-                  'font-serif text-lg font-medium tracking-tight transition-colors',
-                  transparent ? 'text-white' : 'text-brand-maroon',
-                )}
-              >
+              <div className="font-serif text-xl font-bold tracking-tight text-brand-maroon">
                 Essence of <span className="text-brand-saffron">Varanasi</span>
               </div>
-              <div
-                className={cn(
-                  'text-[10px] uppercase tracking-[0.2em] transition-colors',
-                  transparent ? 'text-white/70' : 'text-brand-muted',
-                )}
-              >
+              <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-muted">
                 Sacred journeys · Since {brand.founded}
               </div>
             </div>
           </Link>
 
-          {/* Desktop nav */}
-          <ul className="hidden lg:flex items-center gap-0.5">
+          {/* Desktop nav links */}
+          <ul className="hidden lg:flex items-center gap-1">
             {nav.map((item) => (
               <li
                 key={item.label}
@@ -154,20 +124,21 @@ export default function Navbar() {
                 <Link
                   href={item.href}
                   className={cn(
-                    'inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap',
-                    transparent
-                      ? 'text-white/90 hover:text-white hover:bg-white/10'
-                      : 'text-brand-ink hover:text-brand-maroon hover:bg-brand-cream',
-                    isActive(item.href) && (transparent ? 'text-brand-gold' : 'text-brand-saffron-dark'),
+                    'inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-semibold transition-colors whitespace-nowrap',
+                    isActive(item.href)
+                      ? 'text-brand-saffron-dark bg-brand-cream font-bold'
+                      : 'text-brand-ink hover:text-brand-maroon hover:bg-brand-cream/80',
                   )}
                 >
                   {item.label}
-                  {'children' in item && <IconChevronDown width={14} height={14} className="opacity-70" />}
+                  {'children' in item && (
+                    <IconChevronDown width={14} height={14} className="opacity-70" />
+                  )}
                 </Link>
                 {'children' in item && item.children && (
                   <div
                     className={cn(
-                      'absolute left-1/2 top-full -translate-x-1/2 pt-2 transition-all duration-200',
+                      'absolute left-1/2 top-full -translate-x-1/2 pt-2 transition-all duration-200 z-50',
                       openDropdown === item.label
                         ? 'opacity-100 visible translate-y-0'
                         : 'opacity-0 invisible -translate-y-1',
@@ -178,7 +149,7 @@ export default function Navbar() {
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block rounded-xl px-4 py-2.5 text-sm text-brand-ink hover:bg-brand-cream hover:text-brand-maroon transition-colors"
+                          className="block rounded-xl px-4 py-2.5 text-sm font-medium text-brand-ink hover:bg-brand-cream hover:text-brand-maroon transition-colors"
                         >
                           {child.label}
                         </Link>
@@ -190,8 +161,8 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* CTA + mobile toggle */}
-          <div className="flex items-center gap-2">
+          {/* CTA Button + Mobile Menu Hamburger */}
+          <div className="flex items-center gap-3">
             <Button
               href={whatsappLink(defaultWhatsAppMessage)}
               variant="primary"
@@ -203,10 +174,7 @@ export default function Navbar() {
             </Button>
             <button
               type="button"
-              className={cn(
-                'lg:hidden grid h-11 w-11 place-items-center rounded-full transition-colors',
-                transparent ? 'text-white hover:bg-white/10' : 'text-brand-maroon hover:bg-brand-cream',
-              )}
+              className="lg:hidden grid h-11 w-11 place-items-center rounded-full text-brand-maroon hover:bg-brand-cream transition-colors"
               aria-label="Open menu"
               onClick={() => setDrawerOpen(true)}
             >
@@ -216,7 +184,7 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile drawer */}
+      {/* Mobile navigation drawer */}
       <div
         className={cn(
           'fixed inset-0 z-[60] lg:hidden transition-opacity duration-300',
@@ -229,12 +197,12 @@ export default function Navbar() {
         />
         <aside
           className={cn(
-            'absolute right-0 top-0 h-full w-[88%] max-w-md bg-cream-radial bg-brand-cream shadow-2xl transition-transform duration-300 flex flex-col',
+            'absolute right-0 top-0 h-full w-[88%] max-w-md bg-brand-cream shadow-2xl transition-transform duration-300 flex flex-col',
             drawerOpen ? 'translate-x-0' : 'translate-x-full',
           )}
         >
-          <div className="flex items-center justify-between border-b border-brand-line px-6 h-20">
-            <span className="font-serif text-lg text-brand-maroon">
+          <div className="flex items-center justify-between border-b border-brand-line px-6 h-20 bg-white">
+            <span className="font-serif text-lg font-bold text-brand-maroon">
               Essence of <span className="text-brand-saffron">Varanasi</span>
             </span>
             <button
@@ -247,15 +215,17 @@ export default function Navbar() {
             </button>
           </div>
 
-          <nav className="flex-1 overflow-y-auto px-3 py-4">
+          <nav className="flex-1 overflow-y-auto px-4 py-4">
             {nav.map((item) => (
               <div key={item.label} className="border-b border-brand-line/60">
-                {('children' in item && item.children) ? (
+                {'children' in item && item.children ? (
                   <>
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between px-3 py-3.5 text-left text-base font-medium text-brand-maroon"
-                      onClick={() => setMobileOpen(mobileOpen === item.label ? null : item.label)}
+                      className="flex w-full items-center justify-between px-3 py-3.5 text-left text-base font-semibold text-brand-maroon"
+                      onClick={() =>
+                        setMobileOpen(mobileOpen === item.label ? null : item.label)
+                      }
                     >
                       {item.label}
                       <IconChevronDown
@@ -277,7 +247,7 @@ export default function Navbar() {
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block px-7 py-2.5 text-sm text-brand-ink hover:text-brand-saffron-dark"
+                          className="block px-7 py-2.5 text-sm font-medium text-brand-ink hover:text-brand-saffron-dark"
                         >
                           {child.label}
                         </Link>
@@ -288,7 +258,7 @@ export default function Navbar() {
                   <Link
                     href={item.href}
                     className={cn(
-                      'block px-3 py-3.5 text-base font-medium transition-colors',
+                      'block px-3 py-3.5 text-base font-semibold transition-colors',
                       isActive(item.href)
                         ? 'text-brand-saffron-dark'
                         : 'text-brand-maroon hover:text-brand-saffron-dark',
@@ -301,7 +271,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="border-t border-brand-line p-5 space-y-3">
+          <div className="border-t border-brand-line p-5 space-y-3 bg-white">
             <Button
               href={whatsappLink(defaultWhatsAppMessage)}
               variant="primary"
@@ -313,7 +283,7 @@ export default function Navbar() {
             </Button>
             <a
               href={`tel:${brand.phone.replace(/\s/g, '')}`}
-              className="flex items-center justify-center gap-2 text-sm text-brand-muted"
+              className="flex items-center justify-center gap-2 text-sm font-medium text-brand-muted hover:text-brand-maroon"
             >
               <IconPhone width={15} height={15} /> {brand.phone}
             </a>
