@@ -40,17 +40,17 @@ export const tours: Tour[] = [
     days: 1,
     category: 'day-trip',
     destinations: ['varanasi', 'sarnath'],
-    price: 149,
+    price: 70,
     priceUnit: 'per person',
     heroImage:
       '/images/tours/varanasi-spiritual.webp',
     cardImage:
       '/images/tours/varanasi-spiritual.webp',
     summary:
-      'From sunrise on the Ganges to the evening aarti — every essential layer of Varanasi in a single, well-paced day with a private guide and a chauffeured vehicle.',
+      'From sunrise on the Ganges to the evening aarti — every essential layer of Varanasi in a single, well-paced day with a private guide and a chauffeured vehicle. ₹6,000 ($70) per person.',
     highlights: [
       'Private sunrise boat ride on the Ganges',
-      'Walking the 84 ghats with a local guide',
+      'Heritage walking by street with a local guide',
       'Kashi Vishwanath Corridor darshan',
       'Sarnath — the Buddha\'s first sermon',
       'Reserved seating for the evening Ganga Aarti',
@@ -67,7 +67,7 @@ export const tours: Tour[] = [
           '08:30 — Traditional breakfast of kachori-sabzi, jalebi, masala chai',
           '09:30 — Kashi Vishwanath Temple darshan via the new corridor',
           '11:00 — Drive to Sarnath (10 km) — Dhamek Stupa, museum, Deer Park',
-          '14:00 — Lunch at a heritage haveli in the old city',
+          '14:00 — Lunch at a 3 star category hotel with breakfast',
           '15:30 — Banaras Hindu University, Bharat Kala Bhavan museum',
           '17:30 — Sunset at Assi Ghat',
           '18:30 — Reserved front-row view of the Dashashwamedh Ganga Aarti',
@@ -99,18 +99,17 @@ export const tours: Tour[] = [
     days: 2,
     category: 'day-trip',
     destinations: ['varanasi', 'sarnath'],
-    price: 379,
+    price: 120,
     priceUnit: 'per person',
     heroImage: '/images/scenes/varanasi-river.webp',
     cardImage: '/images/scenes/varanasi-river.webp',
     summary:
-      'A slower, richer immersion. Two full days let you sit with the city, take cooking lessons, eat where locals eat, and stay in a heritage haveli.',
+      'A slower, richer immersion. Two full days let you sit with the city, eat where locals eat, and stay in a 3 star category hotel with breakfast.',
     highlights: [
-      'Heritage haveli stay in the old city',
+      '3 star category hotel with breakfast stay in the old city',
       'Private boat ride at sunrise',
-      'Cooking class — learn the Banarasi thali',
       'Weavers\' quarter & silk factory visit',
-      'Sarnath + Ramnagar Fort day-trip',
+      'Sarnath (Buddhist place) day trip',
       'Both Aartis — morning & evening',
     ],
     itinerary: [
@@ -119,7 +118,7 @@ export const tours: Tour[] = [
         title: 'Arrival & first aarti',
         activities: [
           'Pick-up from airport / station',
-          'Check-in at a restored 19th-century haveli',
+          'Check-in at a 3 star category hotel with breakfast',
           'Walking tour of Vishwanath lanes',
           'Sunset on the ghats',
           'Reserved Dashashwamedh Aarti seating',
@@ -134,7 +133,7 @@ export const tours: Tour[] = [
           '04:30 — Sunrise boat ride on the Ganges',
           '07:00 — Breakfast at a 100-year-old lassi shop',
           '08:30 — Kashi Vishwanath darshan',
-          '10:30 — Drive to Sarnath — full guided tour',
+          '10:30 — Drive to Sarnath (Buddhist place) — full guided tour',
           '14:00 — Traditional thali lunch',
           '15:30 — Banarasi silk weaving workshop',
           '17:30 — Return to hotel',
@@ -144,10 +143,9 @@ export const tours: Tour[] = [
       },
     ],
     inclusions: [
-      '1 night heritage haveli',
+      '1 night 3 star category hotel with breakfast',
       'All transfers',
       'Guides & entry tickets',
-      'Cooking class',
       'Two meals',
     ],
     exclusions: ['Flights / trains', 'Personal shopping', 'Travel insurance'],
@@ -165,7 +163,7 @@ export const tours: Tour[] = [
     days: 3,
     category: 'spiritual',
     destinations: ['varanasi', 'sarnath'],
-    price: 559,
+    price: 170,
     priceUnit: 'per person',
     heroImage: '/images/scenes/varanasi-assi.webp',
     cardImage: '/images/scenes/varanasi-assi.webp',
@@ -173,7 +171,7 @@ export const tours: Tour[] = [
       'Our signature city-deep package. Three days lets us slow it down, weave in artisan visits, a yoga session on the ghats, and a quiet evening of classical music.',
     highlights: [
       'Yoga session with a senior teacher at sunrise',
-      'Heritage haveli stay',
+      '3 star category hotel with breakfast stay',
       'Private classical Rudra Veena recital',
       'Banarasi silk weaving workshop',
       'Sarnath at golden hour',
@@ -221,10 +219,10 @@ export const tours: Tour[] = [
       },
     ],
     inclusions: [
-      '2 nights heritage haveli',
+      '2 nights 3 star category hotel with breakfast',
       'Private guide',
       'All transfers',
-      'Yoga, cooking, weaving sessions',
+      'Yoga & weaving sessions',
       'Tickets & Aarti seating',
       'Daily breakfast',
     ],
@@ -233,108 +231,6 @@ export const tours: Tour[] = [
     groupSize: '2 — 8 guests',
     rating: 5.0,
     reviewCount: 94,
-  },
-
-  // ─── 5-Day Varanasi Spiritual ────────────────────────────
-  {
-    slug: 'varanasi-spiritual',
-    title: 'Varanasi Spiritual Tour',
-    duration: '5 Days / 4 Nights',
-    days: 5,
-    category: 'spiritual',
-    destinations: ['varanasi', 'sarnath'],
-    price: 899,
-    priceUnit: 'per person',
-    heroImage:
-      '/images/tours/varanasi-spiritual.webp',
-    cardImage:
-      '/images/tours/varanasi-spiritual.webp',
-    summary:
-      'Our most-loved transformative journey — five days of sunrise meditation, mantra, music, and the slow absorption of the world\'s most ancient living city.',
-    highlights: [
-      '4 nights in a riverside heritage haveli',
-      'Daily sunrise meditation & yoga',
-      'Vedic fire ceremony (havan) at sunset',
-      'Private Rudra Veena & tabla recital',
-      'Day trips to Sarnath & Ramnagar Fort',
-      'Cooking, weaving & block-printing workshops',
-      'Personal pandit & concierge',
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: 'Arrival · Welcome Aarti',
-        activities: [
-          'Airport / station pick-up',
-          'Check-in at heritage haveli',
-          'Welcome chai on the rooftop',
-          'Walking orientation of nearby ghats',
-          'Reserved Aarti seating + dinner',
-        ],
-        meals: 'Dinner',
-      },
-      {
-        day: 2,
-        title: 'Sunrise · Vishwanath · Weavers',
-        activities: [
-          '05:00 Sunrise yoga',
-          '06:30 Private boat',
-          '08:30 Breakfast',
-          '10:00 Kashi Vishwanath darshan',
-          '13:00 Lunch at a riverside Bengali restaurant',
-          '15:00 Banarasi silk workshop',
-          '18:00 Havan (Vedic fire ceremony)',
-          '19:30 Dinner',
-        ],
-        meals: 'Breakfast · Lunch · Dinner',
-      },
-      {
-        day: 3,
-        title: 'Sarnath',
-        activities: [
-          'Full day in Sarnath � guided',
-          'Meditation at the Bodhi sapling',
-          'Lunch at a Tibetan monastery',
-          'Museum visit',
-          'Evening free for rest / spa',
-        ],
-        meals: 'Breakfast · Lunch · Dinner',
-      },
-      {
-        day: 4,
-        title: 'Ramnagar Fort · Classical Music',
-        activities: [
-          'Morning at Ramnagar Fort & museum',
-          'Lunch on the boat',
-          'Afternoon free',
-          '19:00 Private classical recital (Rudra Veena, tabla)',
-        ],
-        meals: 'Breakfast · Lunch · Dinner',
-      },
-      {
-        day: 5,
-        title: 'Departure',
-        activities: [
-          'Sunrise boat at dawn',
-          'Slow breakfast',
-          '11:00 Final blessings with resident pandit',
-          'Drop to airport / station',
-        ],
-        meals: 'Breakfast',
-      },
-    ],
-    inclusions: [
-      '4 nights heritage haveli (river view)',
-      'Daily yoga',
-      'All transfers & guides',
-      'Tickets, Aarti seating, ceremonies',
-      'All meals',
-    ],
-    exclusions: ['Flights / trains', 'Personal shopping', 'Travel insurance'],
-    bestSeason: 'October — March',
-    groupSize: '2 — 8 guests',
-    rating: 4.9,
-    reviewCount: 76,
   },
 
   // ─── 4-Day Ayodhya ───────────────────────────────────────
@@ -359,7 +255,7 @@ export const tours: Tour[] = [
       'Hanuman Garhi & Kanak Bhawan',
       'One full day in Varanasi',
       'Reserved Ganga Aarti seating',
-      'Premium hotel stay',
+      '3 star category hotel with breakfast stay',
     ],
     itinerary: [
       {
@@ -410,7 +306,7 @@ export const tours: Tour[] = [
       },
     ],
     inclusions: [
-      '3 nights premium hotel',
+      '3 nights 3 star category hotel with breakfast',
       'All transfers',
       'VIP darshan arrangements',
       'Guides',
@@ -421,78 +317,6 @@ export const tours: Tour[] = [
     groupSize: '2 — 14 guests',
     rating: 4.8,
     reviewCount: 142,
-  },
-
-  // ─── 3-Day Gaya ──────────────────────────────────────────
-  {
-    slug: 'gaya-pilgrimage',
-    title: 'Gaya Pilgrimage Tour',
-    duration: '3 Days / 2 Nights',
-    days: 3,
-    category: 'pilgrimage',
-    destinations: ['gaya', 'bodh-gaya'],
-    price: 599,
-    priceUnit: 'per person',
-    heroImage:
-      '/images/tours/gaya-pilgrimage.webp',
-    cardImage:
-      '/images/tours/gaya-pilgrimage.webp',
-    summary:
-      'Pind Daan at the sacred Falgu river and the enlightenment seat of the Buddha — the two most moving pilgrimage sites in eastern India.',
-    highlights: [
-      'Pind Daan ceremony with our pandit',
-      'Vishnupad Temple',
-      'Mahabodhi Temple (UNESCO)',
-      'The Bodhi Tree',
-      'Falgu river meditation',
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: 'Varanasi → Gaya',
-        activities: [
-          'Morning flight / drive to Gaya',
-          'Check-in',
-          'Vishnupad Temple & Falgu river visit',
-          'Evening pind daan briefing with pandit',
-        ],
-        meals: 'Dinner',
-      },
-      {
-        day: 2,
-        title: 'Pind Daan · Bodh Gaya',
-        activities: [
-          'Sunrise pind daan at Falgu',
-          'Drive to Bodh Gaya',
-          'Mahabodhi Temple darshan',
-          'Meditation under the Bodhi tree',
-          'Visit international monasteries',
-        ],
-        meals: 'Breakfast · Dinner',
-      },
-      {
-        day: 3,
-        title: 'Return',
-        activities: [
-          'Morning Mangla Gauri temple',
-          'Lunch',
-          'Drive / fly back to Varanasi',
-        ],
-        meals: 'Breakfast',
-      },
-    ],
-    inclusions: [
-      '2 nights hotel',
-      'Pandit for pind daan',
-      'All transfers',
-      'Guides',
-      'Daily breakfast',
-    ],
-    exclusions: ['Flights / trains', 'Personal shopping', 'Travel insurance'],
-    bestSeason: 'October — March',
-    groupSize: '2 — 12 guests',
-    rating: 4.9,
-    reviewCount: 58,
   },
 
   // ─── 3-Day Prayagraj ─────────────────────────────────────
@@ -553,7 +377,7 @@ export const tours: Tour[] = [
       },
     ],
     inclusions: [
-      '2 nights hotel',
+      '2 nights 3 star category hotel with breakfast',
       'All transfers',
       'Guides',
       'Boat ride tickets',

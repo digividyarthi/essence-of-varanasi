@@ -61,7 +61,7 @@ export default function Footer() {
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/65">
               Boutique pilgrimage and cultural tours across Varanasi, Sarnath, Ayodhya,
-              Gaya, Prayagraj and Bodh Gaya. Curated by locals, hosted with care.
+              and Prayagraj. Curated by locals, hosted with care.
             </p>
 
             <div className="mt-6 flex items-center gap-3">

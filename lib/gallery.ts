@@ -1,7 +1,7 @@
 export type GalleryImage = {
   src: string;
   alt: string;
-  category: 'Varanasi' | 'Ayodhya' | 'Gaya' | 'Prayagraj' | 'Fleet' | 'Guests';
+  category: 'Varanasi' | 'Ayodhya' | 'Prayagraj' | 'Fleet' | 'Guests';
   span?: 'wide' | 'tall' | 'normal';
 };
 
@@ -12,8 +12,6 @@ export const galleryImages: GalleryImage[] = [
   { src: '/images/scenes/varanasi-river.webp', alt: 'Evening on the Ganges', category: 'Varanasi' },
   { src: '/images/tours/ayodhya-heritage.webp', alt: 'Ram Mandir, Ayodhya', category: 'Ayodhya', span: 'wide' },
   { src: '/images/scenes/varanasi-river.webp', alt: 'Saryu riverbank', category: 'Ayodhya' },
-  { src: '/images/tours/gaya-pilgrimage.webp', alt: 'Falgu river, Gaya', category: 'Gaya', span: 'tall' },
-  { src: '/images/scenes/temple-thai.webp', alt: 'Vishnupad temple precinct', category: 'Gaya' },
   { src: '/images/tours/prayagraj.webp', alt: 'Triveni Sangam', category: 'Prayagraj' },
   { src: '/images/scenes/prayagraj-sangam.webp', alt: 'Confluence of the three rivers', category: 'Prayagraj' },
   { src: '/images/fleet/tempo.jpg', alt: 'Tempo Traveller exterior', category: 'Fleet' },

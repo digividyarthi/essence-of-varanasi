@@ -11,7 +11,7 @@ import { IconArrowUpRight, IconMapPin, IconChevronRight } from '@/components/ui/
 export const metadata: Metadata = {
   title: 'Destinations',
   description:
-    'Six sacred destinations across northern India — Varanasi, Sarnath, Ayodhya, Prayagraj, Gaya and Bodh Gaya. Explore each with a local guide.',
+    'Four sacred destinations across northern India — Varanasi, Sarnath, Ayodhya and Prayagraj. Explore each with a local guide.',
   alternates: { canonical: '/destinations' },
 };
 

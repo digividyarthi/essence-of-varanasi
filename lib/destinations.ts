@@ -27,7 +27,7 @@ export const destinations: Destination[] = [
       'Evening Ganga Aarti at Dashashwamedh Ghat',
       'Kashi Vishwanath Corridor darshan',
       'Sarnath — where Buddha first taught',
-      'Walking the 84 ghats at dawn',
+      'Heritage walking by street at dawn',
     ],
     bestTime: 'October to March',
     attractions: [
@@ -123,57 +123,6 @@ export const destinations: Destination[] = [
     travelTips: [
       'Boat ride to the confluence is best at sunrise — water is calmer and the light is otherworldly.',
       'For Magh Mela, accommodation is tight — book 60+ days in advance.',
-    ],
-  },
-  {
-    slug: 'gaya',
-    name: 'Gaya',
-    state: 'Bihar',
-    tagline: 'The land of pind daan for ancestors',
-    description:
-      "Gaya is one of Hinduism's holiest sites — particularly for pind daan, the ritual offering for departed ancestors performed on the banks of the Falgu river. The surrounding hills host the ancient Mangla Gauri temple and the Vishnupad temple.",
-    heroImage: '/images/destinations/gaya-hero.webp',
-    cardImage: '/images/destinations/gaya.webp',
-    highlights: [
-      'Vishnupad Temple',
-      'Falgu River pind daan',
-      'Mangla Gauri temple',
-      'Pretshila Hill',
-    ],
-    bestTime: 'October to March',
-    attractions: [
-      { name: 'Vishnupad Temple', image: '/images/destinations/gaya.webp' },
-      { name: 'Falgu River', image: '/images/scenes/buddha-golden.webp' },
-    ],
-    travelTips: [
-      'Pind daan can only be performed at this exact site — arrange a pandit through us in advance.',
-      'Combine with Bodh Gaya for a 2-3 day pilgrimage circuit.',
-    ],
-  },
-  {
-    slug: 'bodh-gaya',
-    name: 'Bodh Gaya',
-    state: 'Bihar',
-    tagline: 'Where the Buddha attained enlightenment',
-    description:
-      'Under the Bodhi tree here, Siddhartha became the Buddha over 2,500 years ago. The Mahabodhi Temple — a UNESCO World Heritage Site — and monasteries built by Buddhist communities from across Asia make Bodh Gaya a profoundly peaceful, world-shrine.',
-    heroImage: '/images/destinations/bodh-gaya-hero.webp',
-    cardImage: '/images/destinations/bodh-gaya.webp',
-    highlights: [
-      'Mahabodhi Temple (UNESCO)',
-      'The Bodhi Tree',
-      'Great Buddha Statue (80 ft)',
-      'International monasteries — Thai, Tibetan, Japanese',
-    ],
-    bestTime: 'October to March · Buddha Purnima',
-    attractions: [
-      { name: 'Mahabodhi Temple', image: '/images/scenes/mahabodhi-alt.webp' },
-      { name: 'Great Buddha Statue', image: '/images/scenes/bodh-gaya-buddha-statue.webp' },
-      { name: 'Thai Monastery', image: '/images/scenes/temple-buddhist.webp' },
-    ],
-    travelTips: [
-      'Closed on certain Buddhist holidays — check calendar.',
-      'Monasteries welcome visitors for meditation; ask us to arrange an introduction.',
     ],
   },
 ];

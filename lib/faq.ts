@@ -10,7 +10,7 @@ export const faqs: Faq[] = [
   {
     category: 'Tours',
     q: 'What makes Essence of Varanasi different?',
-    a: "We design every itinerary around local, family-run experiences — heritage haveli stays, resident pandits, and guides who have lived their whole lives in the lanes you'll walk. We are not a broker; we curate end-to-end with our own team on the ground.",
+    a: "We design every itinerary around local, family-run experiences — 3 star category hotel stays, resident pandits, and guides who have lived their whole lives in the lanes you'll walk. We are not a broker; we curate end-to-end with our own team on the ground.",
   },
   {
     category: 'Tours',
@@ -30,7 +30,7 @@ export const faqs: Faq[] = [
   {
     category: 'Booking',
     q: 'How far in advance should I book?',
-    a: 'For individual tours, 7–14 days is usually sufficient. For peak season (October–March), Dev Diwali, and Holi, we recommend 60+ days, especially for heritage haveli stays which are limited.',
+    a: 'For individual tours, 7–14 days is usually sufficient. For peak season (October–March), Dev Diwali, and Holi, we recommend 60+ days.',
   },
   {
     category: 'Booking',

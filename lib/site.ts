@@ -5,7 +5,7 @@ export const brand = {
   shortName: 'Essence of Varanasi',
   tagline: 'Sacred journeys along the Ganges',
   description:
-    'Boutique pilgrimage and cultural tours across Varanasi, Sarnath, Ayodhya, Gaya, Prayagraj and Bodh Gaya. Curated by locals, hosted with care.',
+    'Boutique pilgrimage and cultural tours across Varanasi, Sarnath, Ayodhya, and Prayagraj. Curated by locals, hosted with care.',
   url: 'https://essenceofvaranasi.com',
   email: 'info@essenceofvaranasi.com',
   phone: '+91 97925 86352',
@@ -30,8 +30,6 @@ export const nav = [
       { label: 'Sarnath', href: '/destinations/sarnath' },
       { label: 'Ayodhya', href: '/destinations/ayodhya' },
       { label: 'Prayagraj', href: '/destinations/prayagraj' },
-      { label: 'Gaya', href: '/destinations/gaya' },
-      { label: 'Bodh Gaya', href: '/destinations/bodh-gaya' },
     ],
   },
   {
@@ -41,9 +39,7 @@ export const nav = [
       { label: '1 Day in Varanasi', href: '/tours/1-day-varanasi' },
       { label: '2 Days in Varanasi', href: '/tours/2-days-varanasi' },
       { label: '3 Days in Varanasi', href: '/tours/3-days-varanasi' },
-      { label: '5-Day Varanasi Spiritual', href: '/tours/varanasi-spiritual' },
       { label: '4-Day Ayodhya Heritage', href: '/tours/ayodhya-heritage' },
-      { label: '3-Day Gaya Pilgrimage', href: '/tours/gaya-pilgrimage' },
       { label: '3-Day Prayagraj', href: '/tours/prayagraj-tour' },
     ],
   },

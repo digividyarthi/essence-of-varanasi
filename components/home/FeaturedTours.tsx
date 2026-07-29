@@ -6,14 +6,13 @@ import Button from '@/components/ui/Button';
 import { IconArrow } from '@/components/ui/icons';
 
 export default function FeaturedTours() {
-  // Show the 6 most popular across categories
+  // Show featured tours across categories
   const featured = [
     '1-day-varanasi',
     '2-days-varanasi',
     '3-days-varanasi',
-    'varanasi-spiritual',
     'ayodhya-heritage',
-    'gaya-pilgrimage',
+    'prayagraj-tour',
   ]
     .map((slug) => tours.find((t) => t.slug === slug))
     .filter(Boolean) as typeof tours;

@@ -25,8 +25,8 @@ export const testimonials: Testimonial[] = [
     location: 'Delhi, India',
     photo: '/images/testimonials/rahul.jpg',
     quote:
-      'Professional guides and impeccable service. From airport pickup to reserved Aarti seating, we felt like we were part of a sacred journey from start to finish. The haveli stay was unforgettable.',
-    tour: '5-Day Varanasi Spiritual',
+      'Professional guides and impeccable service. From airport pickup to reserved Aarti seating, we felt like we were part of a sacred journey from start to finish. The hotel stay was unforgettable.',
+    tour: '2-Day Varanasi',
     rating: 5,
   },
   {
@@ -56,7 +56,7 @@ export const testimonials: Testimonial[] = [
     photo: '/images/scenes/portrait-woman-1.webp',
     quote:
       'I have travelled the world photographing rituals, and the Essence of Varanasi team gave me access I could never have arranged on my own. They understood the art of being present without intruding.',
-    tour: '5-Day Varanasi Spiritual',
+    tour: '3-Day Varanasi',
     rating: 5,
   },
   {

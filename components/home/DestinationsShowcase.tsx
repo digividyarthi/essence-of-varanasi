@@ -6,11 +6,9 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import { IconArrowUpRight, IconMapPin } from '@/components/ui/icons';
 import { cn } from '@/lib/cn';
 
-// Editorial staggered grid — first card spans larger
+// Editorial staggered grid — 4 cards layout
 const spans = [
-  'lg:col-span-2 lg:row-span-2',
-  '',
-  '',
+  'lg:col-span-2',
   '',
   '',
   'lg:col-span-2',
@@ -25,10 +23,10 @@ export default function DestinationsShowcase() {
           eyebrow="Destinations"
           title={
             <>
-              Six sacred cities, <span className="accent-italic">one</span> journey
+              Four sacred cities, <span className="accent-italic">one</span> journey
             </>
           }
-          description="From the eternal ghats of Kashi to the enlightenment seat of Bodh Gaya — every destination we host has been walked by our team a thousand times."
+          description="From the eternal ghats of Kashi to the sacred rivers of Prayagraj — every destination we host has been walked by our team a thousand times."
           className="mx-auto"
         />
 

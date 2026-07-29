@@ -7,7 +7,7 @@ import Lightbox from '@/components/ui/Lightbox';
 import { cn } from '@/lib/cn';
 import { IconCamera } from '@/components/ui/icons';
 
-const categories = ['All', 'Varanasi', 'Ayodhya', 'Gaya', 'Prayagraj', 'Fleet', 'Guests'] as const;
+const categories = ['All', 'Varanasi', 'Ayodhya', 'Prayagraj', 'Fleet', 'Guests'] as const;
 
 export default function GalleryGrid() {
   const [filter, setFilter] = useState<(typeof categories)[number]>('All');

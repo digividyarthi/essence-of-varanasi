@@ -28,7 +28,7 @@ export default function HomePage() {
       addressRegion: 'Uttar Pradesh',
       addressCountry: 'IN',
     },
-    areaServed: ['Varanasi', 'Sarnath', 'Ayodhya', 'Prayagraj', 'Gaya', 'Bodh Gaya'],
+    areaServed: ['Varanasi', 'Sarnath', 'Ayodhya', 'Prayagraj'],
     priceRange: '$$',
   };
 

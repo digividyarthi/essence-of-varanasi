@@ -6,7 +6,7 @@ import FinalCTA from '@/components/home/FinalCTA';
 export const metadata: Metadata = {
   title: 'Gallery',
   description:
-    'Photos from our journeys across Varanasi, Sarnath, Ayodhya, Prayagraj, Gaya and Bodh Gaya — the ghats, the aartis, the smiles.',
+    'Photos from our journeys across Varanasi, Sarnath, Ayodhya, and Prayagraj — the ghats, the aartis, the smiles.',
   alternates: { canonical: '/gallery' },
 };
 
