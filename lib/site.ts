@@ -40,7 +40,6 @@ export const nav = [
       { label: '2 Days in Varanasi', href: '/tours/2-days-varanasi' },
       { label: '3 Days in Varanasi', href: '/tours/3-days-varanasi' },
       { label: '4-Day Ayodhya Heritage', href: '/tours/ayodhya-heritage' },
-      { label: '3-Day Prayagraj', href: '/tours/prayagraj-tour' },
     ],
   },
   { label: 'Fleet', href: '/fleet' },

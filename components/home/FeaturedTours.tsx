@@ -12,7 +12,6 @@ export default function FeaturedTours() {
     '2-days-varanasi',
     '3-days-varanasi',
     'ayodhya-heritage',
-    'prayagraj-tour',
   ]
     .map((slug) => tours.find((t) => t.slug === slug))
     .filter(Boolean) as typeof tours;
@@ -36,7 +35,7 @@ export default function FeaturedTours() {
           </Button>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((tour) => (
             <TourCard key={tour.slug} tour={tour} />
           ))}

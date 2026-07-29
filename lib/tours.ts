@@ -241,14 +241,14 @@ export const tours: Tour[] = [
     days: 4,
     category: 'pilgrimage',
     destinations: ['ayodhya', 'varanasi'],
-    price: 749,
+    price: 220,
     priceUnit: 'per person',
     heroImage:
       '/images/tours/ayodhya-heritage.webp',
     cardImage:
       '/images/tours/ayodhya-heritage.webp',
     summary:
-      'A combined Ayodhya + Varanasi circuit — Ram Mandir darshan, the Saryu Aarti, and the spiritual depth of Kashi, with comfortable overnight transfers.',
+      'A combined Ayodhya + Varanasi circuit — Ram Mandir darshan, the Saryu Aarti, and the spiritual depth of Kashi, with comfortable private AC transfers. ₹18,500 ($220) per person.',
     highlights: [
       'VIP Ram Mandir darshan',
       'Saryu River evening Aarti',
@@ -317,77 +317,6 @@ export const tours: Tour[] = [
     groupSize: '2 — 14 guests',
     rating: 4.8,
     reviewCount: 142,
-  },
-
-  // ─── 3-Day Prayagraj ─────────────────────────────────────
-  {
-    slug: 'prayagraj-tour',
-    title: 'Prayagraj Tour',
-    duration: '3 Days / 2 Nights',
-    days: 3,
-    category: 'pilgrimage',
-    destinations: ['prayagraj', 'varanasi'],
-    price: 599,
-    priceUnit: 'per person',
-    heroImage:
-      '/images/tours/prayagraj.webp',
-    cardImage:
-      '/images/tours/prayagraj.webp',
-    summary:
-      'Triveni Sangam, Kumbh Mela ground, and the layered history of Prayagraj — paired with an unhurried Varanasi day for contrast.',
-    highlights: [
-      'Triveni Sangam boat ride at sunrise',
-      'Akhileshwar & Akbar\'s Fort',
-      'Anand Bhawan (Nehru family home)',
-      'One full day in Varanasi',
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: 'Varanasi → Prayagraj',
-        activities: [
-          'Morning drive to Prayagraj (~4 hrs)',
-          'Triveni Sangam visit',
-          'Evening Sangam Aarti',
-          'Dinner at a riverside guesthouse',
-        ],
-        meals: 'Dinner',
-      },
-      {
-        day: 2,
-        title: 'Prayagraj sightseeing',
-        activities: [
-          'Anand Bhawan',
-          'Akbar\'s Fort',
-          'Akhileshwar Temple',
-          'Local lunch',
-          'Evening free',
-        ],
-        meals: 'Breakfast · Lunch · Dinner',
-      },
-      {
-        day: 3,
-        title: 'Return to Varanasi',
-        activities: [
-          'Sunrise boat at Sangam',
-          'Drive back to Varanasi',
-          'Drop',
-        ],
-        meals: 'Breakfast',
-      },
-    ],
-    inclusions: [
-      '2 nights 3 star category hotel with breakfast',
-      'All transfers',
-      'Guides',
-      'Boat ride tickets',
-      'Daily breakfast',
-    ],
-    exclusions: ['Flights / trains', 'Personal shopping', 'Travel insurance'],
-    bestSeason: 'October — March · Magh Mela',
-    groupSize: '2 — 12 guests',
-    rating: 4.8,
-    reviewCount: 41,
   },
 ];
 
