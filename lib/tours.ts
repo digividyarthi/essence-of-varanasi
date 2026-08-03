@@ -138,7 +138,6 @@ export const tours: Tour[] = [
           '14:00 — Traditional thali lunch',
           '15:30 — Banarasi silk weaving workshop',
           '17:30 — Return to hotel',
-          '19:00 — Classical music recital (optional, seasonal)',
         ],
         meals: 'Breakfast · Lunch',
       },
