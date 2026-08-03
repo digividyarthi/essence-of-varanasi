@@ -120,7 +120,7 @@ export const tours: Tour[] = [
         activities: [
           'Pick-up from airport / station',
           'Check-in at a 3 star category hotel with breakfast',
-          'Walking tour of Vishwanath lanes',
+          'City tour (Durga Mandir, Sankat Mochan, BHU - Shri Vishwanath Temple)',
           'Sunset on the ghats',
           'Reserved Dashashwamedh Aarti seating',
           'Dinner of Banarasi street food, curated',
@@ -191,7 +191,7 @@ export const tours: Tour[] = [
         title: 'Arrival · Kashi',
         activities: [
           'Pick-up, check-in, fresh lime soda welcome',
-          'Walking tour of Vishwanath lanes',
+          'City tour (Durga Mandir, Sankat Mochan, BHU - Shri Vishwanath Temple)',
           'Sunset Aarti with reserved seats',
           'Welcome dinner at a rooftop overlooking the ghats',
         ],
