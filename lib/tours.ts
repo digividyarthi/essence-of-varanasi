@@ -107,7 +107,7 @@ export const tours: Tour[] = [
     summary:
       'A slower, richer immersion. Two full days let you sit with the city, eat where locals eat, and stay in a 3 star category hotel with breakfast.',
     highlights: [
-      '3 star category hotel with breakfast stay in the old city',
+      '3 star category hotel with breakfast stay in Varanasi',
       'Private boat ride at sunrise',
       'Weavers\' quarter & silk factory visit',
       'Sarnath (Buddhist place) day trip',
