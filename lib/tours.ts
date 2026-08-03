@@ -176,9 +176,7 @@ export const tours: Tour[] = [
     summary:
       'Our signature city-deep package. Three days lets us slow it down, weave in artisan visits, a yoga session on the ghats, and a quiet evening of classical music.',
     highlights: [
-      'Yoga session with a senior teacher at sunrise',
       '3 star category hotel with breakfast stay',
-      'Private classical Rudra Veena recital',
       'Banarasi silk weaving workshop',
       'Sarnath at golden hour',
       'Both Aartis',
