@@ -9,17 +9,46 @@ require_once __DIR__ . '/_auth.php';
 require_once __DIR__ . '/_helpers.php';
 require_once __DIR__ . '/_layout.php';
 
-require_login();
+try {
+    require_login();
+} catch (Throwable $e) {
+    header('Content-Type: text/html; charset=utf-8');
+    echo '<div style="font-family: sans-serif; padding: 40px; max-width: 600px; margin: 40px auto; background: #fff3f3; border: 1px solid #f87171; border-radius: 12px;">';
+    echo '<h2 style="color: #dc2626; margin-top: 0;">Database Connection Error</h2>';
+    echo '<p style="color: #4b5563;">' . htmlspecialchars($e->getMessage()) . '</p>';
+    echo '<hr style="margin: 20px 0; border: none; border-top: 1px solid #fca5a5;">';
+    echo '<p><strong>Quick Fix:</strong> Click below to run database setup & seed initial admin user:</p>';
+    echo '<a href="/admin/seed.php?token=hotel-seed-2026" style="display: inline-block; background: #dc2626; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Run Database Setup & Seed Admin User →</a>';
+    echo '</div>';
+    exit;
+}
 
-// Metrics queries
-$totalBookings   = (int)db()->query("SELECT COUNT(*) FROM bookings")->fetchColumn();
-$newToday        = (int)db()->query("SELECT COUNT(*) FROM bookings WHERE DATE(created_at) = CURDATE()")->fetchColumn();
-$upcomingCheckIn = (int)db()->query("SELECT COUNT(*) FROM bookings WHERE check_in >= CURDATE() AND status != 'cancelled'")->fetchColumn();
-$confirmedCount  = (int)db()->query("SELECT COUNT(*) FROM bookings WHERE status = 'confirmed'")->fetchColumn();
+$totalBookings   = 0;
+$newToday        = 0;
+$upcomingCheckIn = 0;
+$confirmedCount  = 0;
+$recent          = [];
 
-// Recent 10 Bookings
-$stmt = db()->query("SELECT id, created_at, guest_name, email, phone, check_in, check_out, room_type, guests, status FROM bookings ORDER BY created_at DESC LIMIT 10");
-$recent = $stmt->fetchAll();
+try {
+    // Metrics queries
+    $totalBookings   = (int)db()->query("SELECT COUNT(*) FROM bookings")->fetchColumn();
+    $newToday        = (int)db()->query("SELECT COUNT(*) FROM bookings WHERE DATE(created_at) = CURDATE()")->fetchColumn();
+    $upcomingCheckIn = (int)db()->query("SELECT COUNT(*) FROM bookings WHERE check_in >= CURDATE() AND status != 'cancelled'")->fetchColumn();
+    $confirmedCount  = (int)db()->query("SELECT COUNT(*) FROM bookings WHERE status = 'confirmed'")->fetchColumn();
+
+    // Recent 10 Bookings
+    $stmt = db()->query("SELECT id, created_at, guest_name, email, phone, check_in, check_out, room_type, guests, status FROM bookings ORDER BY created_at DESC LIMIT 10");
+    $recent = $stmt->fetchAll();
+} catch (Throwable $e) {
+    render_header('Dashboard Overview', 'dashboard');
+    echo '<div class="admin-card" style="border-left: 4px solid #ef4444; background: #fff8f8;">';
+    echo '<h3 style="color: #dc2626; margin-bottom: 8px;">Database Setup Required</h3>';
+    echo '<p style="margin-bottom: 16px;">The database tables are not initialized yet or query failed: <em>' . e($e->getMessage()) . '</em></p>';
+    echo '<a href="/admin/seed.php?token=hotel-seed-2026" class="btn btn-primary">Run Database Setup & Seed Admin User →</a>';
+    echo '</div>';
+    render_footer();
+    exit;
+}
 
 render_header('Dashboard Overview', 'dashboard');
 ?>
