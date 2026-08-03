@@ -31,7 +31,23 @@ export default function ContactForm() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // No backend yet — open WhatsApp with prefilled details (TODO: integrate Formspree/Resend).
+    // Save to Hotel/Tour CRM backend database
+    try {
+      fetch('/api/bookings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          guest_name: `${form.firstName} ${form.lastName}`.trim(),
+          email: form.email,
+          phone: form.phone,
+          check_in: form.date || null,
+          room_type: form.tour || 'General Enquiry',
+          special_requests: form.message,
+          source_page: typeof window !== 'undefined' ? window.location.pathname : '/contact',
+        }),
+      }).catch(() => {});
+    } catch (_) {}
+
     window.open(whatsappLink(decodeURIComponent(buildMessage())), '_blank');
     setSent(true);
   };
