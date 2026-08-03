@@ -295,7 +295,6 @@ export const tours: Tour[] = [
           'Late breakfast',
           'Drive back to Varanasi',
           'Reserved Dashashwamedh Ganga Aarti',
-          'Dinner on a rooftop',
         ],
         meals: 'Breakfast · Dinner',
       },
