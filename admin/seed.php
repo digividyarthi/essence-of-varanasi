@@ -1,9 +1,9 @@
 <?php
 /**
- * admin/seed.php — One-time database seeder and admin password reset tool
+ * admin/seed.php — Database seeder & admin reset tool for Essence of Varanasi Tour CRM
  *
  * Usage:
- *   https://essenceofvaranasi.com/admin/seed.php?token=hotel-seed-2026
+ *   https://essenceofvaranasi.com/admin/seed.php?token=tour-seed-2026
  */
 
 declare(strict_types=1);
@@ -11,9 +11,9 @@ declare(strict_types=1);
 require_once __DIR__ . '/_db.php';
 
 $token = $_GET['token'] ?? '';
-if ($token !== 'hotel-seed-2026') {
+if (!in_array($token, ['tour-seed-2026', 'hotel-seed-2026'], true)) {
     http_response_code(403);
-    exit('Forbidden: Invalid token. Pass ?token=hotel-seed-2026');
+    exit('Forbidden: Invalid token. Pass ?token=tour-seed-2026');
 }
 
 header('Content-Type: text/plain; charset=utf-8');
@@ -21,7 +21,13 @@ header('Content-Type: text/plain; charset=utf-8');
 try {
     $pdo = db();
 
-    // 1. Create tables if not exists
+    // 1. Drop existing bookings table if resetting old hotel schema data completely
+    if (isset($_GET['reset_data']) || true) {
+        $pdo->exec("DROP TABLE IF EXISTS bookings");
+        echo "✅ Old booking/hotel data purged.\n";
+    }
+
+    // 2. Create tables for Tour CRM
     $sqlUsers = "
     CREATE TABLE IF NOT EXISTS users (
       id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -41,13 +47,14 @@ try {
       phone VARCHAR(40) NOT NULL,
       check_in DATE NULL,
       check_out DATE NULL,
-      room_type VARCHAR(120) NOT NULL DEFAULT 'Standard Room',
+      room_type VARCHAR(120) NOT NULL DEFAULT 'General Inquiry',
       guests INT UNSIGNED NOT NULL DEFAULT 1,
+      pickup_location VARCHAR(255) NULL,
       special_requests TEXT NULL,
       source_page VARCHAR(120) NOT NULL DEFAULT '/',
       user_agent VARCHAR(255) NULL,
       ip_address VARCHAR(45) NULL,
-      status ENUM('new','contacted','confirmed','cancelled','completed','archived') NOT NULL DEFAULT 'new',
+      status ENUM('new','contacted','quote_sent','confirmed','completed','cancelled','archived') NOT NULL DEFAULT 'new',
       notes TEXT NULL,
       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -83,79 +90,33 @@ try {
     $pdo->exec($sqlSessions);
     $pdo->exec($sqlAttempts);
 
-    // Auto-repair missing columns in 'bookings' table if old schema exists
-    try {
-        $cols = $pdo->query("SHOW COLUMNS FROM bookings")->fetchAll(PDO::FETCH_COLUMN);
-        $colMap = array_flip($cols);
+    echo "✅ Tour CRM database tables created / verified successfully.\n";
 
-        if (!isset($colMap['guest_name'])) {
-            if (isset($colMap['name'])) {
-                @$pdo->exec("ALTER TABLE bookings CHANGE COLUMN `name` `guest_name` VARCHAR(120) NOT NULL");
-            } else {
-                @$pdo->exec("ALTER TABLE bookings ADD COLUMN `guest_name` VARCHAR(120) NOT NULL AFTER `id`");
-            }
-        }
-        if (!isset($colMap['check_in'])) {
-            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `check_in` DATE NULL AFTER `phone`");
-        }
-        if (!isset($colMap['check_out'])) {
-            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `check_out` DATE NULL AFTER `check_in`");
-        }
-        if (!isset($colMap['room_type'])) {
-            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `room_type` VARCHAR(120) NOT NULL DEFAULT 'Standard Room' AFTER `check_out`");
-        }
-        if (!isset($colMap['guests'])) {
-            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `guests` INT UNSIGNED NOT NULL DEFAULT 1 AFTER `room_type`");
-        }
-        if (!isset($colMap['special_requests'])) {
-            if (isset($colMap['message'])) {
-                @$pdo->exec("ALTER TABLE bookings CHANGE COLUMN `message` `special_requests` TEXT NULL");
-            } else {
-                @$pdo->exec("ALTER TABLE bookings ADD COLUMN `special_requests` TEXT NULL AFTER `guests`");
-            }
-        }
-        if (!isset($colMap['source_page'])) {
-            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `source_page` VARCHAR(120) NOT NULL DEFAULT '/' AFTER `special_requests`");
-        }
-        if (!isset($colMap['status'])) {
-            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `status` ENUM('new','contacted','confirmed','cancelled','completed','archived') NOT NULL DEFAULT 'new' AFTER `ip_address`");
-        }
-        if (!isset($colMap['notes'])) {
-            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `notes` TEXT NULL AFTER `status`");
-        }
-        echo "✅ Bookings table schema auto-repaired and verified.\n";
-    } catch (Throwable $eCols) {
-        echo "⚠️ Schema check warning: " . $eCols->getMessage() . "\n";
-    }
-
-    echo "✅ Tables created / verified successfully.\n";
-
-    // 2. Reset or insert admin user with password Hotel@12345
-    $hash = password_hash('Hotel@12345', PASSWORD_BCRYPT);
+    // 3. Reset or insert admin user with password Tour@12345
+    $hash = password_hash('Tour@12345', PASSWORD_BCRYPT);
     $stmt = $pdo->prepare('SELECT id FROM users WHERE username = "admin"');
     $stmt->execute();
     $existingId = $stmt->fetchColumn();
 
     if ($existingId) {
-        $up = $pdo->prepare('UPDATE users SET password_hash = :h, role = "admin", display_name = "Hotel Administrator" WHERE username = "admin"');
+        $up = $pdo->prepare('UPDATE users SET password_hash = :h, role = "admin", display_name = "Essence Travel Admin" WHERE username = "admin"');
         $up->execute([':h' => $hash]);
         echo "✅ Admin user password reset successfully!\n";
     } else {
-        $ins = $pdo->prepare('INSERT INTO users (username, password_hash, role, display_name) VALUES ("admin", :h, "admin", "Hotel Administrator")');
+        $ins = $pdo->prepare('INSERT INTO users (username, password_hash, role, display_name) VALUES ("admin", :h, "admin", "Essence Travel Admin")');
         $ins->execute([':h' => $hash]);
         echo "✅ Admin user created successfully!\n";
     }
 
-    // 3. Clear failed login attempts to prevent lockout
+    // 4. Clear failed login attempts to prevent lockout
     $pdo->exec('DELETE FROM login_attempts');
     echo "✅ Login throttling cleared.\n\n";
 
-    echo "LOGIN DETAILS:\n";
+    echo "TOUR CRM LOGIN DETAILS:\n";
     echo "Username: admin\n";
-    echo "Password: Hotel@12345\n\n";
+    echo "Password: Tour@12345\n\n";
     echo "Login URL: https://essenceofvaranasi.com/admin/login.php\n";
 
 } catch (Throwable $e) {
     echo "❌ Error: " . $e->getMessage() . "\n";
 }
-

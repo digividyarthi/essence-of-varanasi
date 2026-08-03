@@ -1,6 +1,6 @@
 <?php
 /**
- * admin/_helpers.php — Utility functions for Hotel CRM
+ * admin/_helpers.php — Utility functions for Essence of Varanasi Tour CRM
  */
 
 declare(strict_types=1);
@@ -20,7 +20,7 @@ function fmt_dt(?string $dtStr): string {
     return date('d M Y, h:i A', $time);
 }
 
-/** Format Date only (e.g. Check-in/out) */
+/** Format Date only (e.g. Travel Date) */
 function fmt_date(?string $dStr): string {
     if (!$dStr) return '—';
     $time = strtotime($dStr);
@@ -31,12 +31,13 @@ function fmt_date(?string $dStr): string {
 /** Format Status Label */
 function fmt_status(string $st): string {
     $map = [
-        'new'       => 'New Inquiry',
-        'contacted' => 'Contacted',
-        'confirmed' => 'Confirmed',
-        'cancelled' => 'Cancelled',
-        'completed' => 'Completed',
-        'archived'  => 'Archived',
+        'new'        => 'New Inquiry',
+        'contacted'  => 'Contacted',
+        'quote_sent' => 'Quote Sent',
+        'confirmed'  => 'Confirmed Tour',
+        'completed'  => 'Completed',
+        'cancelled'  => 'Cancelled',
+        'archived'   => 'Archived',
     ];
     return $map[$st] ?? ucfirst($st);
 }
@@ -78,11 +79,12 @@ function redirect(string $url): void {
     exit;
 }
 
-/** Calculate length of stay in nights */
-function calculate_nights(?string $checkIn, ?string $checkOut): int {
-    if (!$checkIn || !$checkOut) return 0;
+/** Calculate duration of trip in days */
+function calculate_days(?string $checkIn, ?string $checkOut): int {
+    if (!$checkIn || !$checkOut) return 1;
     $tIn = strtotime($checkIn);
     $tOut = strtotime($checkOut);
-    if ($tIn === false || $tOut === false || $tOut <= $tIn) return 0;
-    return (int)round(($tOut - $tIn) / 86400);
+    if ($tIn === false || $tOut === false || $tOut < $tIn) return 1;
+    $diff = (int)round(($tOut - $tIn) / 86400);
+    return max(1, $diff + 1);
 }

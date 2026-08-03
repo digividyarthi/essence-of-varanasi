@@ -1,9 +1,9 @@
 <?php
 /**
- * admin/_db.php — Single PDO connection manager for Hotel CRM
+ * admin/_db.php — Single PDO connection manager for Essence of Varanasi Tour CRM
  *
  * Resolves DB credentials from:
- *   1. /home/u.../private/db.php (outside web root)
+ *   1. /home/u138607075/private/db.php (outside web root)
  *   2. __DIR__/../../../private/db.php (relative private directory)
  *   3. Environment variables (DB_HOST, DB_NAME, DB_USER, DB_PASS)
  */

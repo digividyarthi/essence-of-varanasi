@@ -1,12 +1,12 @@
 <?php
 /**
- * api/bookings.php — Capture hotel room booking submissions from public web forms
+ * api/bookings.php — Capture tour & experience booking inquiries from public web forms
  *
  * Method: POST
- * Body: JSON or Form URL-encoded { guest_name, email, phone, check_in?, check_out?, room_type?, guests?, special_requests?, _gotcha?, source_page? }
+ * Body: JSON or Form URL-encoded { guest_name, email, phone, check_in?, check_out?, room_type?, guests?, pickup_location?, special_requests?, _gotcha?, source_page? }
  *
  * Responses:
- *   200 { "ok": true, "id": <id>, "message": "Reservation request received." }
+ *   200 { "ok": true, "id": <id>, "message": "Tour inquiry received." }
  *   200 { "ok": true, "id": null }         ← Honeypot triggered
  *   422 { "ok": false, "errors": { field: msg, ... } }
  *   429 { "ok": false, "error": "Too many submissions. Please try again later." }
@@ -41,7 +41,7 @@ if (!is_array($data)) {
 // 1. Honeypot check
 $honeypot = trim((string)($data['_gotcha'] ?? ''));
 if ($honeypot !== '') {
-    echo json_encode(['ok' => true, 'id' => null, 'message' => 'Reservation received.']);
+    echo json_encode(['ok' => true, 'id' => null, 'message' => 'Tour inquiry received.']);
     exit;
 }
 
@@ -59,25 +59,26 @@ try {
 
 if ($count >= 10) {
     http_response_code(429);
-    echo json_encode(['ok' => false, 'error' => 'Too many reservation requests. Please try again in an hour or contact us directly by phone.']);
+    echo json_encode(['ok' => false, 'error' => 'Too many booking inquiries. Please try again in an hour or contact us directly via WhatsApp/Phone.']);
     exit;
 }
 
-// 3. Extract & Validate Fields
-$guestName       = trim((string)($data['guest_name'] ?? $data['name'] ?? ''));
+// 3. Extract & Validate Fields (flexible for tour inquiries)
+$guestName       = trim((string)($data['guest_name'] ?? $data['full_name'] ?? $data['name'] ?? ''));
 $email           = trim((string)($data['email'] ?? ''));
 $phone           = trim((string)($data['phone'] ?? ''));
-$checkIn         = trim((string)($data['check_in'] ?? ''));
-$checkOut        = trim((string)($data['check_out'] ?? ''));
-$roomType        = trim((string)($data['room_type'] ?? 'Standard Room'));
-$guests          = (int)($data['guests'] ?? 1);
-$specialRequests = trim((string)($data['special_requests'] ?? $data['message'] ?? ''));
+$checkIn         = trim((string)($data['check_in'] ?? $data['travel_date'] ?? $data['date'] ?? $data['start_date'] ?? ''));
+$checkOut        = trim((string)($data['check_out'] ?? $data['end_date'] ?? ''));
+$tourName        = trim((string)($data['room_type'] ?? $data['tour_name'] ?? $data['service_type'] ?? $data['tour'] ?? 'General Inquiry'));
+$guests          = (int)($data['guests'] ?? $data['travelers'] ?? $data['persons'] ?? 1);
+$pickupLocation  = trim((string)($data['pickup_location'] ?? $data['hotel'] ?? ''));
+$specialRequests = trim((string)($data['special_requests'] ?? $data['message'] ?? $data['requirements'] ?? ''));
 $source          = trim((string)($data['source_page'] ?? $data['source'] ?? ''));
 
-if ($roomType === '') {
-    $roomType = 'Standard Room';
+if ($tourName === '') {
+    $tourName = 'General Inquiry';
 }
-$roomType = substr($roomType, 0, 120);
+$tourName = substr($tourName, 0, 120);
 
 if ($source === '') {
     $ref = $_SERVER['HTTP_REFERER'] ?? '';
@@ -102,19 +103,24 @@ if ($phone === '' || strlen($phone) < 7 || strlen($phone) > 40) {
     $errors['phone'] = 'Please enter a valid phone number.';
 }
 if ($checkIn !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $checkIn)) {
-    $errors['check_in'] = 'Please select a valid check-in date (YYYY-MM-DD).';
+    if (strtotime($checkIn) === false) {
+        $errors['check_in'] = 'Please select a valid travel date (YYYY-MM-DD).';
+    } else {
+        $checkIn = date('Y-m-d', strtotime($checkIn));
+    }
 }
 if ($checkOut !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $checkOut)) {
-    $errors['check_out'] = 'Please select a valid check-out date (YYYY-MM-DD).';
+    if (strtotime($checkOut) !== false) {
+        $checkOut = date('Y-m-d', strtotime($checkOut));
+    } else {
+        $errors['check_out'] = 'Please select a valid end date (YYYY-MM-DD).';
+    }
 }
-if ($checkIn !== '' && $checkOut !== '' && strtotime($checkOut) <= strtotime($checkIn)) {
-    $errors['check_out'] = 'Check-out date must be after check-in date.';
-}
-if ($guests < 1 || $guests > 50) {
-    $errors['guests'] = 'Please specify a valid number of guests.';
+if ($guests < 1 || $guests > 100) {
+    $errors['guests'] = 'Please specify a valid number of travelers.';
 }
 if (mb_strlen($specialRequests) > 2000) {
-    $errors['special_requests'] = 'Special requests message is too long (max 2000 characters).';
+    $errors['special_requests'] = 'Message is too long (max 2000 characters).';
 }
 
 if (!empty($errors)) {
@@ -126,8 +132,8 @@ if (!empty($errors)) {
 // 4. Save to DB
 try {
     $stmt = db()->prepare(
-        'INSERT INTO bookings (guest_name, email, phone, check_in, check_out, room_type, guests, special_requests, source_page, user_agent, ip_address)
-         VALUES (:name, :email, :phone, :cin, :cout, :room, :guests, :req, :source, :ua, :ip)'
+        'INSERT INTO bookings (guest_name, email, phone, check_in, check_out, room_type, guests, pickup_location, special_requests, source_page, user_agent, ip_address)
+         VALUES (:name, :email, :phone, :cin, :cout, :room, :guests, :pickup, :req, :source, :ua, :ip)'
     );
 
     $stmt->execute([
@@ -136,8 +142,9 @@ try {
         ':phone'  => $phone,
         ':cin'    => $checkIn !== '' ? $checkIn : null,
         ':cout'   => $checkOut !== '' ? $checkOut : null,
-        ':room'   => $roomType,
+        ':room'   => $tourName,
         ':guests' => $guests,
+        ':pickup' => $pickupLocation !== '' ? substr($pickupLocation, 0, 255) : null,
         ':req'    => $specialRequests !== '' ? $specialRequests : null,
         ':source' => $source !== '' ? $source : '/',
         ':ua'     => substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255),
@@ -146,7 +153,7 @@ try {
 
     $id = (int)db()->lastInsertId();
 
-    // 5. Send notification email to admin
+    // 5. Send notification email to tour admin
     try {
         notify_new_booking([
             'id'               => $id,
@@ -155,24 +162,25 @@ try {
             'phone'            => $phone,
             'check_in'         => $checkIn,
             'check_out'        => $checkOut,
-            'room_type'        => $roomType,
+            'room_type'        => $tourName,
             'guests'           => $guests,
+            'pickup_location'  => $pickupLocation,
             'special_requests' => $specialRequests,
             'source_page'      => $source,
         ]);
     } catch (Throwable $eMail) {
-        error_log('Booking notification email failed: ' . $eMail->getMessage());
+        error_log('Tour booking notification email failed: ' . $eMail->getMessage());
     }
 
     echo json_encode([
         'ok'      => true,
         'id'      => $id,
-        'message' => 'Thank you! Your room reservation request has been received. Our team will contact you shortly.',
+        'message' => 'Thank you! Your tour inquiry has been received. Our travel specialist will contact you shortly via WhatsApp/Phone.',
     ]);
 } catch (Throwable $e) {
     http_response_code(500);
     echo json_encode([
         'ok'    => false,
-        'error' => 'Unable to process your reservation at this moment. Please try again or call us directly.',
+        'error' => 'Unable to process your tour inquiry at this moment. Please contact us directly on WhatsApp or call.',
     ]);
 }

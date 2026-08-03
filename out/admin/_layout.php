@@ -1,6 +1,6 @@
 <?php
 /**
- * admin/_layout.php — Shared layout header and footer for Hotel CRM
+ * admin/_layout.php — Shared layout header and footer for Essence of Varanasi Tour CRM
  */
 
 declare(strict_types=1);
@@ -17,7 +17,7 @@ function render_header(string $title = 'Dashboard', string $activeTab = 'dashboa
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= e($title) ?> · Hotel CRM</title>
+  <title><?= e($title) ?> · Essence Tour CRM</title>
   <link rel="stylesheet" href="/admin/admin.css">
   <script src="/admin/admin.js" defer></script>
 </head>
@@ -26,7 +26,7 @@ function render_header(string $title = 'Dashboard', string $activeTab = 'dashboa
   <!-- Sidebar -->
   <aside class="admin-sidebar">
     <div class="admin-brand">
-      🏨 Hotel <span>CRM</span>
+      🛺 Essence <span>Tour CRM</span>
     </div>
     <ul class="admin-nav">
       <li>
@@ -36,13 +36,13 @@ function render_header(string $title = 'Dashboard', string $activeTab = 'dashboa
       </li>
       <li>
         <a href="/admin/bookings.php" class="<?= $activeTab === 'bookings' ? 'active' : '' ?>">
-          🛎️ Room Bookings
+          🧳 Tour Inquiries
         </a>
       </li>
     </ul>
     <div class="admin-sidebar-footer">
       Logged in as:<br>
-      <strong style="color: #fff;"><?= e($user['display_name'] ?? 'Staff') ?></strong>
+      <strong style="color: #fff;"><?= e($user['display_name'] ?? 'Travel Admin') ?></strong>
     </div>
   </aside>
 
@@ -51,7 +51,7 @@ function render_header(string $title = 'Dashboard', string $activeTab = 'dashboa
     <header class="admin-topbar">
       <h1 class="admin-page-title"><?= e($title) ?></h1>
       <div style="display: flex; align-items: center; gap: 16px;">
-        <span style="color: var(--color-muted); font-weight: 500;">Hi, <?= e($user['display_name'] ?? 'Staff') ?></span>
+        <span style="color: var(--color-muted); font-weight: 500;">Namaste, <?= e($user['display_name'] ?? 'Admin') ?></span>
         <a href="/admin/logout.php" class="btn btn-outline btn-sm">Logout</a>
       </div>
     </header>

@@ -1,6 +1,6 @@
 <?php
 /**
- * admin/login.php — Admin login form with authentication throttling
+ * admin/login.php — Admin login form for Essence of Varanasi Tour CRM
  */
 
 declare(strict_types=1);
@@ -63,13 +63,13 @@ $flashes = flash_get();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login · Hotel CRM</title>
+  <title>Admin Login · Essence Tour CRM</title>
   <link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body class="login-body">
   <div class="login-card">
-    <div class="login-brand">🏨 Hotel <span>CRM</span></div>
-    <div class="login-sub">Sign in to manage guest room reservations</div>
+    <div class="login-brand">🛺 Essence <span>Tour CRM</span></div>
+    <div class="login-sub">Sign in to manage Varanasi tour inquiries &amp; travel bookings</div>
 
     <?php foreach ($flashes as $type => $msg): ?>
       <div class="alert alert-<?= e($type) ?>"><?= e($msg) ?></div>
@@ -90,7 +90,7 @@ $flashes = flash_get();
         <input type="password" id="password" name="password" required autocomplete="current-password">
       </div>
       <div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Sign In</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Sign In to Tour CRM</button>
       </div>
     </form>
   </div>

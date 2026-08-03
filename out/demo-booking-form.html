@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hotel Room Reservation - Test Form</title>
+  <title>Essence of Varanasi — Tour Booking & Inquiry Test Form</title>
   <style>
     :root {
-      --primary: #1e3a8a;
-      --accent: #d97706;
-      --bg: #f8fafc;
-      --text: #0f172a;
+      --primary: #6B1F2E;
+      --accent: #F4A024;
+      --bg: #FBF6EC;
+      --text: #1F1A18;
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -25,16 +25,19 @@
     .booking-card {
       background: #ffffff;
       width: 100%;
-      max-width: 540px;
+      max-width: 580px;
       padding: 32px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(107, 31, 46, 0.08);
+      border: 1px solid #e2d9c8;
     }
     h2 {
       margin-top: 0;
       color: var(--primary);
       font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .form-group {
       margin-bottom: 16px;
@@ -44,19 +47,21 @@
       font-weight: 600;
       font-size: 0.85rem;
       margin-bottom: 6px;
+      color: #4a3e3d;
     }
     input, select, textarea {
       width: 100%;
-      padding: 10px 12px;
+      padding: 11px 14px;
       border: 1px solid #cbd5e1;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 0.95rem;
       box-sizing: border-box;
+      background-color: #fff;
     }
     input:focus, select:focus, textarea:focus {
       outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(244, 160, 36, 0.2);
     }
     .row {
       display: flex;
@@ -68,21 +73,23 @@
     button {
       background-color: var(--primary);
       color: #ffffff;
-      padding: 12px 20px;
+      padding: 14px 20px;
       font-size: 1rem;
       font-weight: 700;
       border: none;
-      border-radius: 6px;
+      border-radius: 30px;
       cursor: pointer;
       width: 100%;
-      transition: background 0.2s;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(107, 31, 46, 0.2);
     }
     button:hover {
-      background-color: #1e40af;
+      background-color: #521622;
+      transform: translateY(-1px);
     }
     .alert {
-      padding: 12px;
-      border-radius: 6px;
+      padding: 12px 16px;
+      border-radius: 8px;
       margin-bottom: 16px;
       display: none;
       font-size: 0.9rem;
@@ -94,24 +101,24 @@
 <body>
 
 <div class="booking-card">
-  <h2>🏨 Reserve Your Stay</h2>
-  <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Fill in the details below to request a room booking.</p>
+  <h2>🛺 Essence of Varanasi</h2>
+  <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 24px;">Fill in the details below to inquire about tour packages, boat rides, or custom travel arrangements.</p>
 
   <div id="statusAlert" class="alert"></div>
 
-  <form id="hotelBookingForm">
+  <form id="tourBookingForm">
     <!-- Honeypot -->
     <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
 
     <div class="form-group">
-      <label>Full Guest Name *</label>
+      <label>Full Traveler Name *</label>
       <input type="text" name="guest_name" placeholder="e.g. Vikramaditya Singh" required>
     </div>
 
     <div class="row">
       <div class="form-group">
         <label>Email Address *</label>
-        <input type="email" name="email" placeholder="guest@example.com" required>
+        <input type="email" name="email" placeholder="traveler@example.com" required>
       </div>
       <div class="form-group">
         <label>Phone / WhatsApp *</label>
@@ -121,53 +128,57 @@
 
     <div class="row">
       <div class="form-group">
-        <label>Check-in Date *</label>
-        <input type="date" name="check_in" required>
+        <label>Select Tour / Experience Package *</label>
+        <select name="room_type" required>
+          <option value="1-Day Ultimate Varanasi Tour">1-Day Ultimate Varanasi Tour</option>
+          <option value="2-Days Varanasi Immersion">2-Days Varanasi Immersion</option>
+          <option value="3-Days Spiritual Kashi">3-Days Spiritual Kashi Tour</option>
+          <option value="4-Days Ayodhya Heritage Tour">4-Days Ayodhya Heritage Tour</option>
+          <option value="Sunrise Boat Ride & Ghat Walk">Sunrise Boat Ride & Ghat Walk</option>
+          <option value="Private Chauffeured Vehicle Hire">Private Chauffeured Vehicle Hire</option>
+          <option value="Custom Itinerary Inquiry">Custom Itinerary & Special Request</option>
+        </select>
       </div>
       <div class="form-group">
-        <label>Check-out Date *</label>
-        <input type="date" name="check_out" required>
+        <label>Travelers *</label>
+        <select name="guests" required>
+          <option value="1">1 Person</option>
+          <option value="2" selected>2 Persons</option>
+          <option value="3">3 Persons</option>
+          <option value="4">4 Persons</option>
+          <option value="5">5+ Family / Group</option>
+        </select>
       </div>
     </div>
 
     <div class="row">
       <div class="form-group">
-        <label>Room Category *</label>
-        <select name="room_type">
-          <option value="Deluxe Heritage Room">Deluxe Heritage Room</option>
-          <option value="Super Deluxe River View">Super Deluxe River View</option>
-          <option value="Executive Luxury Suite">Executive Luxury Suite</option>
-          <option value="Royal Family Suite">Royal Family Suite</option>
-        </select>
+        <label>Travel Date *</label>
+        <input type="date" name="check_in" required>
       </div>
       <div class="form-group">
-        <label>Number of Guests *</label>
-        <select name="guests">
-          <option value="1">1 Adult</option>
-          <option value="2" selected>2 Adults</option>
-          <option value="3">3 Adults</option>
-          <option value="4">4 Adults / Family</option>
-        </select>
+        <label>Pickup Location / Hotel in Varanasi</label>
+        <input type="text" name="pickup_location" placeholder="e.g. Hotel Taj Ganges, Airport, Station...">
       </div>
     </div>
 
     <div class="form-group">
-      <label>Special Requests (Optional)</label>
-      <textarea name="special_requests" rows="3" placeholder="e.g. Airport pickup required, vegetarian breakfast, late arrival..."></textarea>
+      <label>Special Requirements / Message (Optional)</label>
+      <textarea name="special_requests" rows="3" placeholder="e.g. Need VIP Vishwanath Darshan, senior citizen assistance, English speaking guide..."></textarea>
     </div>
 
-    <button type="submit" id="submitBtn">Submit Reservation Request</button>
+    <button type="submit" id="submitBtn">Submit Tour Booking Inquiry</button>
   </form>
 </div>
 
 <script>
-  document.getElementById('hotelBookingForm').addEventListener('submit', async function(e) {
+  document.getElementById('tourBookingForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     const alertBox = document.getElementById('statusAlert');
     
     btn.disabled = true;
-    btn.textContent = 'Submitting Request...';
+    btn.textContent = 'Sending Inquiry...';
     alertBox.style.display = 'none';
 
     const formData = new FormData(this);
@@ -184,22 +195,22 @@
 
       if (response.ok && data.ok) {
         alertBox.className = 'alert alert-success';
-        alertBox.textContent = data.message || 'Reservation received successfully!';
+        alertBox.textContent = data.message || 'Tour inquiry received successfully!';
         alertBox.style.display = 'block';
         this.reset();
       } else {
         alertBox.className = 'alert alert-error';
-        const errMsgs = data.errors ? Object.values(data.errors).join(' ') : (data.error || 'Failed to process reservation.');
+        const errMsgs = data.errors ? Object.values(data.errors).join(' ') : (data.error || 'Failed to submit tour inquiry.');
         alertBox.textContent = errMsgs;
         alertBox.style.display = 'block';
       }
     } catch (err) {
       alertBox.className = 'alert alert-error';
-      alertBox.textContent = 'Network error or server unavailable. Please try again.';
+      alertBox.textContent = 'Network error or server unavailable. Please try again or contact us via WhatsApp.';
       alertBox.style.display = 'block';
     } finally {
       btn.disabled = false;
-      btn.textContent = 'Submit Reservation Request';
+      btn.textContent = 'Submit Tour Booking Inquiry';
     }
   });
 </script>
