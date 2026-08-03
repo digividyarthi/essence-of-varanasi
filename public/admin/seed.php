@@ -1,9 +1,9 @@
 <?php
 /**
- * admin/seed.php — One-time database seeder for Hotel CRM administrator
+ * admin/seed.php — One-time database seeder and admin password reset tool
  *
  * Usage:
- *   https://yourhotel.com/admin/seed.php?token=hotel-seed-2026
+ *   https://essenceofvaranasi.com/admin/seed.php?token=hotel-seed-2026
  */
 
 declare(strict_types=1);
@@ -85,28 +85,32 @@ try {
 
     echo "✅ Tables created / verified successfully.\n";
 
-    // 2. Insert default admin user if missing
-    $stmt = $pdo->prepare('SELECT COUNT(*) FROM users WHERE username = "admin"');
+    // 2. Reset or insert admin user with password Hotel@12345
+    $hash = password_hash('Hotel@12345', PASSWORD_BCRYPT);
+    $stmt = $pdo->prepare('SELECT id FROM users WHERE username = "admin"');
     $stmt->execute();
-    if ((int)$stmt->fetchColumn() === 0) {
-        $hash = password_hash('Hotel@12345', PASSWORD_BCRYPT);
+    $existingId = $stmt->fetchColumn();
+
+    if ($existingId) {
+        $up = $pdo->prepare('UPDATE users SET password_hash = :h, role = "admin", display_name = "Hotel Administrator" WHERE username = "admin"');
+        $up->execute([':h' => $hash]);
+        echo "✅ Admin user password reset successfully!\n";
+    } else {
         $ins = $pdo->prepare('INSERT INTO users (username, password_hash, role, display_name) VALUES ("admin", :h, "admin", "Hotel Administrator")');
         $ins->execute([':h' => $hash]);
-        echo "✅ Admin user created: username='admin', password='Hotel@12345'\n";
-    } else {
-        echo "ℹ️ Admin user already exists.\n";
+        echo "✅ Admin user created successfully!\n";
     }
 
-    // 3. Rename seed file so it cannot be called again
-    $currentFile = __FILE__;
-    $doneFile    = __DIR__ . '/seed.php.done';
-    if (file_exists($currentFile)) {
-        @rename($currentFile, $doneFile);
-        echo "🔒 Security: seed.php renamed to seed.php.done\n";
-    }
+    // 3. Clear failed login attempts to prevent lockout
+    $pdo->exec('DELETE FROM login_attempts');
+    echo "✅ Login throttling cleared.\n\n";
 
-    echo "\nSetup completed! You can now log in at /admin/login.php\n";
+    echo "LOGIN DETAILS:\n";
+    echo "Username: admin\n";
+    echo "Password: Hotel@12345\n\n";
+    echo "Login URL: https://essenceofvaranasi.com/admin/login.php\n";
 
 } catch (Throwable $e) {
     echo "❌ Error: " . $e->getMessage() . "\n";
 }
+
