@@ -190,7 +190,6 @@ export const tours: Tour[] = [
           'Pick-up, check-in, fresh lime soda welcome',
           'City tour (Durga Mandir, Sankat Mochan, BHU - Shri Vishwanath Temple)',
           'Sunset Aarti with reserved seats',
-          'Welcome dinner at a rooftop overlooking the ghats',
         ],
         meals: 'Dinner',
       },
