@@ -132,8 +132,8 @@ export const tours: Tour[] = [
         title: 'Sunrise, Sarnath & silk',
         activities: [
           '04:30 — Sunrise boat ride on the Ganges',
-          '07:00 — Breakfast at a 100-year-old lassi shop',
-          '08:30 — Kashi Vishwanath darshan',
+          '07:00 — Shri Kashi Vishwanath and Mata Annapurna darshan',
+          '08:30 — Breakfast at hotel',
           '10:30 — Drive to Sarnath (Buddhist place) — full guided tour',
           '14:00 — Traditional thali lunch',
           '15:30 — Banarasi silk weaving workshop',
