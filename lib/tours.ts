@@ -303,7 +303,10 @@ export const tours: Tour[] = [
         title: 'Varanasi · Departure',
         activities: [
           'Sunrise boat ride',
-          'Kashi Vishwanath',
+          'Shri Kashi Vishwanath and Mata Annapurna darshan',
+          'Breakfast at hotel',
+          'City tour (Durga Mandir, Sankat Mochan, BHU - Shri Vishwanath Temple)',
+          'Sarnath full guided visit — Dhamek, museum, monasteries',
           'Drop to airport / station',
         ],
         meals: 'Breakfast',
