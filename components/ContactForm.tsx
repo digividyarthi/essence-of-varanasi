@@ -6,6 +6,30 @@ import { brand } from '@/lib/site';
 import { cn } from '@/lib/cn';
 import { IconCheck, IconArrow } from '@/components/ui/icons';
 
+const COUNTRY_CODES = [
+  { code: '+91', country: 'India', flag: '🇮🇳' },
+  { code: '+1', country: 'USA / Canada', flag: '🇺🇸' },
+  { code: '+44', country: 'UK', flag: '🇬🇧' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺' },
+  { code: '+49', country: 'Germany', flag: '🇩🇪' },
+  { code: '+33', country: 'France', flag: '🇫🇷' },
+  { code: '+81', country: 'Japan', flag: '🇯🇵' },
+  { code: '+39', country: 'Italy', flag: '🇮🇹' },
+  { code: '+34', country: 'Spain', flag: '🇪🇸' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+  { code: '+971', country: 'UAE', flag: '🇦🇪' },
+  { code: '+31', country: 'Netherlands', flag: '🇳🇱' },
+  { code: '+41', country: 'Switzerland', flag: '🇨🇭' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
+  { code: '+66', country: 'Thailand', flag: '🇹🇭' },
+  { code: '+977', country: 'Nepal', flag: '🇳🇵' },
+  { code: '+94', country: 'Sri Lanka', flag: '🇱🇰' },
+  { code: '+880', country: 'Bangladesh', flag: '🇧🇩' },
+  { code: '+55', country: 'Brazil', flag: '🇧🇷' },
+  { code: '+52', country: 'Mexico', flag: '🇲🇽' },
+  { code: '+27', country: 'South Africa', flag: '🇿🇦' },
+];
+
 export default function ContactForm() {
   const [form, setForm] = useState({
     firstName: '',
@@ -16,6 +40,7 @@ export default function ContactForm() {
     tour: '',
     message: '',
   });
+  const [countryCode, setCountryCode] = useState('+91');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -27,6 +52,8 @@ export default function ContactForm() {
     setLoading(true);
     setErrorMsg('');
 
+    const fullPhone = form.phone.startsWith('+') ? form.phone : `${countryCode} ${form.phone}`.trim();
+
     try {
       const res = await fetch('/api/bookings.php', {
         method: 'POST',
@@ -34,7 +61,7 @@ export default function ContactForm() {
         body: JSON.stringify({
           guest_name: `${form.firstName} ${form.lastName}`.trim(),
           email: form.email,
-          phone: form.phone,
+          phone: fullPhone,
           check_in: form.date || null,
           room_type: form.tour || 'General Tour Inquiry',
           special_requests: form.message,
@@ -143,16 +170,30 @@ export default function ContactForm() {
         </div>
         <div>
           <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-muted">
-            Phone / Mobile *
+            Phone / Mobile (with Country Code) *
           </label>
-          <input
-            required
-            type="tel"
-            value={form.phone}
-            onChange={(e) => update('phone', e.target.value)}
-            className={fieldCls}
-            placeholder="+91 9876543210"
-          />
+          <div className="flex gap-2">
+            <select
+              value={countryCode}
+              onChange={(e) => setCountryCode(e.target.value)}
+              className="h-12 w-32 shrink-0 rounded-xl border border-brand-line bg-white px-2 text-xs font-semibold text-brand-ink focus:border-brand-saffron focus:outline-none"
+              aria-label="Select Country Code"
+            >
+              {COUNTRY_CODES.map((c) => (
+                <option key={c.code + c.country} value={c.code}>
+                  {c.flag} {c.code} ({c.country})
+                </option>
+              ))}
+            </select>
+            <input
+              required
+              type="tel"
+              value={form.phone}
+              onChange={(e) => update('phone', e.target.value)}
+              className={fieldCls}
+              placeholder="9876543210"
+            />
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,0 @@
-User-Agent: *
-Allow: /
-
-Host: https://essenceofvaranasi.com
-Sitemap: https://essenceofvaranasi.com/sitemap.xml

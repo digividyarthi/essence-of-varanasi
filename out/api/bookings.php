@@ -67,6 +67,11 @@ if ($count >= 10) {
 $guestName       = trim((string)($data['guest_name'] ?? $data['full_name'] ?? $data['name'] ?? ''));
 $email           = trim((string)($data['email'] ?? ''));
 $phone           = trim((string)($data['phone'] ?? ''));
+if ($phone === '' && !empty($data['phone_number'])) {
+    $code = trim((string)($data['country_code'] ?? '+91'));
+    $num = trim((string)$data['phone_number']);
+    $phone = (strpos($num, '+') === 0) ? $num : ($code . ' ' . $num);
+}
 $checkIn         = trim((string)($data['check_in'] ?? $data['travel_date'] ?? $data['date'] ?? $data['start_date'] ?? ''));
 $checkOut        = trim((string)($data['check_out'] ?? $data['end_date'] ?? ''));
 $tourName        = trim((string)($data['room_type'] ?? $data['tour_name'] ?? $data['service_type'] ?? $data['tour'] ?? 'General Inquiry'));
