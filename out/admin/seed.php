@@ -83,6 +83,51 @@ try {
     $pdo->exec($sqlSessions);
     $pdo->exec($sqlAttempts);
 
+    // Auto-repair missing columns in 'bookings' table if old schema exists
+    try {
+        $cols = $pdo->query("SHOW COLUMNS FROM bookings")->fetchAll(PDO::FETCH_COLUMN);
+        $colMap = array_flip($cols);
+
+        if (!isset($colMap['guest_name'])) {
+            if (isset($colMap['name'])) {
+                @$pdo->exec("ALTER TABLE bookings CHANGE COLUMN `name` `guest_name` VARCHAR(120) NOT NULL");
+            } else {
+                @$pdo->exec("ALTER TABLE bookings ADD COLUMN `guest_name` VARCHAR(120) NOT NULL AFTER `id`");
+            }
+        }
+        if (!isset($colMap['check_in'])) {
+            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `check_in` DATE NULL AFTER `phone`");
+        }
+        if (!isset($colMap['check_out'])) {
+            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `check_out` DATE NULL AFTER `check_in`");
+        }
+        if (!isset($colMap['room_type'])) {
+            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `room_type` VARCHAR(120) NOT NULL DEFAULT 'Standard Room' AFTER `check_out`");
+        }
+        if (!isset($colMap['guests'])) {
+            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `guests` INT UNSIGNED NOT NULL DEFAULT 1 AFTER `room_type`");
+        }
+        if (!isset($colMap['special_requests'])) {
+            if (isset($colMap['message'])) {
+                @$pdo->exec("ALTER TABLE bookings CHANGE COLUMN `message` `special_requests` TEXT NULL");
+            } else {
+                @$pdo->exec("ALTER TABLE bookings ADD COLUMN `special_requests` TEXT NULL AFTER `guests`");
+            }
+        }
+        if (!isset($colMap['source_page'])) {
+            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `source_page` VARCHAR(120) NOT NULL DEFAULT '/' AFTER `special_requests`");
+        }
+        if (!isset($colMap['status'])) {
+            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `status` ENUM('new','contacted','confirmed','cancelled','completed','archived') NOT NULL DEFAULT 'new' AFTER `ip_address`");
+        }
+        if (!isset($colMap['notes'])) {
+            @$pdo->exec("ALTER TABLE bookings ADD COLUMN `notes` TEXT NULL AFTER `status`");
+        }
+        echo "✅ Bookings table schema auto-repaired and verified.\n";
+    } catch (Throwable $eCols) {
+        echo "⚠️ Schema check warning: " . $eCols->getMessage() . "\n";
+    }
+
     echo "✅ Tables created / verified successfully.\n";
 
     // 2. Reset or insert admin user with password Hotel@12345
