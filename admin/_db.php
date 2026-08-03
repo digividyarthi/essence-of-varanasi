@@ -36,12 +36,12 @@ function db(): PDO {
     }
 
     $host = defined('DB_HOST') ? DB_HOST : (getenv('DB_HOST') ?: 'localhost');
-    $name = defined('DB_NAME') ? DB_NAME : (getenv('DB_NAME') ?: '');
-    $user = defined('DB_USER') ? DB_USER : (getenv('DB_USER') ?: '');
-    $pass = defined('DB_PASS') ? DB_PASS : (getenv('DB_PASS') ?: '');
+    $name = defined('DB_NAME') ? DB_NAME : (getenv('DB_NAME') ?: 'u138607075_CRM');
+    $user = defined('DB_USER') ? DB_USER : (getenv('DB_USER') ?: 'u138607075_CRM');
+    $pass = defined('DB_PASS') ? DB_PASS : (getenv('DB_PASS') ?: 'Essenceofvaranasi@1234');
 
-    if (!defined('MAIL_TO'))   define('MAIL_TO',   getenv('MAIL_TO')   ?: 'reservations@hotel.com');
-    if (!defined('MAIL_FROM')) define('MAIL_FROM', getenv('MAIL_FROM') ?: 'no-reply@hotel.com');
+    if (!defined('MAIL_TO'))   define('MAIL_TO',   getenv('MAIL_TO')   ?: 'info@essenceofvaranasi.com');
+    if (!defined('MAIL_FROM')) define('MAIL_FROM', getenv('MAIL_FROM') ?: 'no-reply@essenceofvaranasi.com');
 
     if ($name === '' || $user === '') {
         throw new RuntimeException(
