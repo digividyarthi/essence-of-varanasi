@@ -10,7 +10,7 @@ export const brand = {
   email: 'info@essenceofvaranasi.com',
   phone: '+91 97925 86352',
   whatsapp: '919792586352',
-  address: 'Godowlia Crossing, Varanasi, Uttar Pradesh 221001, India',
+  address: 'VASUDEV NAGAR, SA.17/35-29-A, Ganpathi Nagar, Paharia, Varanasi, Uttar Pradesh 221007',
   founded: 2014,
 } as const;
 
