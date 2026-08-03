@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { nav, brand, whatsappLink, defaultWhatsAppMessage, social } from '@/lib/site';
+import { nav, brand, social } from '@/lib/site';
 import { cn } from '@/lib/cn';
 import Button from '@/components/ui/Button';
 import {
@@ -13,7 +13,7 @@ import {
   IconMail,
   IconMenu,
   IconCross,
-  IconWhatsApp,
+  IconArrow,
   IconInstagram,
   IconFacebook,
   IconYouTube,
@@ -164,13 +164,12 @@ export default function Navbar() {
           {/* CTA Button + Mobile Menu Hamburger */}
           <div className="flex items-center gap-3">
             <Button
-              href={whatsappLink(defaultWhatsAppMessage)}
+              href="/contact"
               variant="primary"
               size="md"
               className="hidden sm:inline-flex"
             >
-              <IconWhatsApp width={16} height={16} />
-              Get a Free Quote
+              Book Tour Inquiry <IconArrow width={16} height={16} />
             </Button>
             <button
               type="button"
@@ -273,13 +272,12 @@ export default function Navbar() {
 
           <div className="border-t border-brand-line p-5 space-y-3 bg-white">
             <Button
-              href={whatsappLink(defaultWhatsAppMessage)}
+              href="/contact"
               variant="primary"
               size="lg"
               className="w-full"
             >
-              <IconWhatsApp width={18} height={18} />
-              Get a Free Quote
+              Book Tour Inquiry <IconArrow width={18} height={18} />
             </Button>
             <a
               href={`tel:${brand.phone.replace(/\s/g, '')}`}

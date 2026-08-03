@@ -4,8 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/cn';
-import { whatsappLink } from '@/lib/site';
-import { IconChevronLeft, IconChevronRight, IconArrow, IconWhatsApp, IconStar } from '@/components/ui/icons';
+import { IconChevronLeft, IconChevronRight, IconArrow, IconStar } from '@/components/ui/icons';
 
 type Slide = {
   image: string;
@@ -144,14 +143,12 @@ export default function HeroCarousel() {
                 >
                   {slide.cta} <IconArrow width={18} height={18} />
                 </Link>
-                <a
-                  href={whatsappLink(`Namaste! I'm interested in the "${slide.eyebrow}" experience. Could you share details?`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/contact"
                   className="inline-flex h-14 items-center gap-2 rounded-full border border-white/30 bg-white/5 px-7 text-base font-medium text-white backdrop-blur transition-all hover:bg-white/15"
                 >
-                  <IconWhatsApp width={18} height={18} /> Enquire on WhatsApp
-                </a>
+                  Book / Enquire Tour <IconArrow width={18} height={18} />
+                </Link>
               </div>
             </div>
           ))}

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import { whatsappLink } from '@/lib/site';
-import { IconWhatsApp, IconArrow, IconPhone } from '@/components/ui/icons';
+import { IconArrow, IconPhone } from '@/components/ui/icons';
 import { MandalaMotif } from '@/components/ui/icons';
 
 export default function FinalCTA() {
@@ -30,20 +29,15 @@ export default function FinalCTA() {
           Ready for your <span className="font-serif italic text-brand-saffron">spiritual</span> journey?
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-lg text-white/75">
-          Tell us your dates, your dream, and your pace. Within 24 hours, you will have a
-          tailored itinerary in your inbox — no obligation, no cost.
+          Tell us your dates, your dream, and your pace. Submit your inquiry and our team will get in touch with a customized itinerary for you.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Button
-            href={whatsappLink("Namaste! I'd like a tailored itinerary for my Varanasi trip.")}
-            variant="whatsapp"
-            size="lg"
-          >
-            <IconWhatsApp width={20} height={20} /> Chat on WhatsApp
-          </Button>
           <Button href="/contact" variant="primary" size="lg">
-            Get a Free Quote <IconArrow width={18} height={18} />
+            Submit Tour Inquiry <IconArrow width={18} height={18} />
+          </Button>
+          <Button href="/tours" variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-brand-maroon">
+            Explore All Packages
           </Button>
         </div>
 

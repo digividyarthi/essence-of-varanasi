@@ -17,7 +17,7 @@ const variants: Record<Variant, string> = {
     'border-2 border-brand-maroon text-brand-maroon hover:bg-brand-maroon hover:text-white',
   ghost: 'text-brand-maroon hover:bg-brand-maroon/5',
   whatsapp:
-    'bg-[#25D366] text-white hover:bg-[#1ebe5b] shadow-soft hover:-translate-y-0.5',
+    'bg-brand-saffron text-white hover:bg-brand-saffron-dark shadow-soft hover:-translate-y-0.5',
   gold:
     'bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-maroon-deep shadow-gold-glow hover:-translate-y-0.5',
 };
@@ -46,7 +46,7 @@ export default function Button(props: ButtonProps | LinkProps) {
   if ('href' in rest && rest.href) {
     const { href, target, rel } = rest as LinkProps;
     const isExternal = href.startsWith('http') || href.startsWith('//');
-    if (isExternal) {
+    if (isExternal && !href.includes('wa.me')) {
       return (
         <a
           href={href}
@@ -59,7 +59,7 @@ export default function Button(props: ButtonProps | LinkProps) {
       );
     }
     return (
-      <Link href={href} className={cls}>
+      <Link href={href.includes('wa.me') ? '/contact' : href} className={cls}>
         {children}
       </Link>
     );

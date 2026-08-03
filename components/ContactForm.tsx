@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { tours } from '@/lib/tours';
-import { whatsappLink, brand } from '@/lib/site';
+import { brand } from '@/lib/site';
 import { cn } from '@/lib/cn';
-import { IconWhatsApp, IconCheck, IconArrow } from '@/components/ui/icons';
+import { IconCheck, IconArrow } from '@/components/ui/icons';
 
 export default function ContactForm() {
   const [form, setForm] = useState({
@@ -16,24 +16,19 @@ export default function ContactForm() {
     tour: '',
     message: '',
   });
+  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const update = (k: keyof typeof form, v: string) => setForm((s) => ({ ...s, [k]: v }));
 
-  const buildMessage = () =>
-    `Namaste! I'd like to enquire about a trip.%0A%0A` +
-    `Name: ${form.firstName} ${form.lastName}%0A` +
-    `Email: ${form.email}%0A` +
-    `Phone: ${form.phone}%0A` +
-    `Travel date: ${form.date || 'flexible'}%0A` +
-    `Interested in: ${form.tour || 'general enquiry'}%0A` +
-    `Message: ${form.message}`;
-
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Save to Hotel/Tour CRM backend database
+    setLoading(true);
+    setErrorMsg('');
+
     try {
-      fetch('/api/bookings.php', {
+      const res = await fetch('/api/bookings.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -41,38 +36,52 @@ export default function ContactForm() {
           email: form.email,
           phone: form.phone,
           check_in: form.date || null,
-          room_type: form.tour || 'General Enquiry',
+          room_type: form.tour || 'General Tour Inquiry',
           special_requests: form.message,
           source_page: typeof window !== 'undefined' ? window.location.pathname : '/contact',
         }),
-      }).catch(() => {});
-    } catch (_) {}
+      });
 
-    window.open(whatsappLink(decodeURIComponent(buildMessage())), '_blank');
-    setSent(true);
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        setSent(true);
+      } else {
+        const err = data.errors ? Object.values(data.errors).join(' ') : (data.error || 'Failed to submit inquiry.');
+        setErrorMsg(err);
+      }
+    } catch (_) {
+      setErrorMsg('Network error. Please check your internet connection or try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (sent) {
     return (
-      <div className="rounded-2xl border border-brand-gold/40 bg-brand-cream p-10 text-center">
-        <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-brand-saffron text-white">
+      <div className="rounded-2xl border border-brand-gold/40 bg-brand-cream p-10 text-center shadow-soft">
+        <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-brand-saffron text-white shadow-soft">
           <IconCheck width={32} height={32} />
         </span>
-        <h3 className="mt-5 font-serif text-2xl text-brand-maroon">Thank you!</h3>
-        <p className="mt-3 text-brand-ink/70">
-          We have opened WhatsApp with your details pre-filled. Hit send there and we will
-          reply within a few hours. Prefer email? Write to us at{' '}
-          <a href={`mailto:${brand.email}`} className="text-brand-saffron-dark underline">
+        <h3 className="mt-5 font-serif text-2xl text-brand-maroon">Tour Inquiry Received!</h3>
+        <p className="mt-3 text-brand-ink/80 leading-relaxed max-w-md mx-auto">
+          Thank you, <strong>{form.firstName}</strong>! Your travel inquiry has been saved in our CRM system. Our travel specialist will review your details and contact you shortly via phone or email.
+        </p>
+        <div className="mt-6 pt-4 border-t border-brand-line/60 text-xs text-brand-muted">
+          Need immediate assistance? Email us directly at{' '}
+          <a href={`mailto:${brand.email}`} className="text-brand-saffron-dark font-semibold underline">
             {brand.email}
           </a>
-          .
-        </p>
+        </div>
         <button
           type="button"
-          onClick={() => setSent(false)}
-          className="mt-6 text-sm font-medium text-brand-maroon underline hover:text-brand-saffron-dark"
+          onClick={() => {
+            setSent(false);
+            setForm({ firstName: '', lastName: '', email: '', phone: '', date: '', tour: '', message: '' });
+          }}
+          className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-brand-maroon underline hover:text-brand-saffron-dark"
         >
-          Send another enquiry
+          Submit another tour inquiry →
         </button>
       </div>
     );
@@ -83,10 +92,16 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">
+      {errorMsg && (
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {errorMsg}
+        </div>
+      )}
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-muted">
-            First name
+            First name *
           </label>
           <input
             required
@@ -99,7 +114,7 @@ export default function ContactForm() {
         </div>
         <div>
           <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-muted">
-            Last name
+            Last name *
           </label>
           <input
             required
@@ -115,7 +130,7 @@ export default function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-muted">
-            Email
+            Email address *
           </label>
           <input
             required
@@ -128,7 +143,7 @@ export default function ContactForm() {
         </div>
         <div>
           <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-muted">
-            Phone / WhatsApp
+            Phone / Mobile *
           </label>
           <input
             required
@@ -136,7 +151,7 @@ export default function ContactForm() {
             value={form.phone}
             onChange={(e) => update('phone', e.target.value)}
             className={fieldCls}
-            placeholder="+91 ..."
+            placeholder="+91 9876543210"
           />
         </div>
       </div>
@@ -144,7 +159,7 @@ export default function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-muted">
-            Travel date
+            Preferred Travel Date
           </label>
           <input
             type="date"
@@ -155,28 +170,29 @@ export default function ContactForm() {
         </div>
         <div>
           <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-muted">
-            Interested in
+            Interested Package / Service
           </label>
           <select
             value={form.tour}
             onChange={(e) => update('tour', e.target.value)}
             className={fieldCls}
           >
-            <option value="">General enquiry</option>
+            <option value="">General Tour Inquiry</option>
             {tours.map((t) => (
               <option key={t.slug} value={t.title}>
                 {t.title}
               </option>
             ))}
-            <option value="Custom itinerary">Custom itinerary</option>
-            <option value="Vehicle hire">Vehicle hire only</option>
+            <option value="Sunrise Boat Ride & Ghat Walk">Sunrise Boat Ride & Ghat Walk</option>
+            <option value="Custom Itinerary">Custom Itinerary</option>
+            <option value="Vehicle Hire">Vehicle Hire Only</option>
           </select>
         </div>
       </div>
 
       <div>
         <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-muted">
-          Your message
+          Your message / Special requirements *
         </label>
         <textarea
           required
@@ -184,19 +200,20 @@ export default function ContactForm() {
           value={form.message}
           onChange={(e) => update('message', e.target.value)}
           className={cn(fieldCls, 'h-auto py-3')}
-          placeholder="Tell us about your group, your interests, and anything we should know..."
+          placeholder="Tell us about your travel plans, group size, or specific requirements..."
         />
       </div>
 
       <button
         type="submit"
-        className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-base font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-[#1ebe5b]"
+        disabled={loading}
+        className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-brand-maroon px-6 text-base font-medium text-white shadow-soft transition-all hover:bg-brand-maroon-deep hover:-translate-y-0.5 disabled:opacity-50"
       >
-        <IconWhatsApp width={20} height={20} /> Send via WhatsApp
-        <IconArrow width={18} height={18} />
+        {loading ? 'Submitting Inquiry...' : 'Submit Tour Booking Inquiry'}
+        {!loading && <IconArrow width={18} height={18} />}
       </button>
       <p className="text-center text-xs text-brand-muted">
-        We typically reply within a few hours. Your details are never shared.
+        Your inquiry is sent directly to our Essence CRM system. Details are strictly private.
       </p>
     </form>
   );

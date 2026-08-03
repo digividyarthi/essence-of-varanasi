@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { tours, findTour, relatedTours } from '@/lib/tours';
 import { destinations } from '@/lib/destinations';
-import { brand, whatsappLink } from '@/lib/site';
+import { brand } from '@/lib/site';
 import ItineraryAccordion from '@/components/tours/ItineraryAccordion';
 import TourCard from '@/components/tours/TourCard';
 import Button from '@/components/ui/Button';
@@ -17,7 +17,6 @@ import {
   IconStar,
   IconCheck,
   IconCross,
-  IconWhatsApp,
   IconArrow,
   IconMapPin,
   IconChevronRight,
@@ -125,7 +124,7 @@ export default function TourDetailPage({ params }: { params: { slug: string } })
               <p className="mt-5 text-lg leading-relaxed text-brand-ink/80">
                 {tour.summary} Over {tour.days} {tour.days === 1 ? 'day' : 'days'}, you will be
                 accompanied by a licensed local guide, chauffeured in an air-conditioned
-                vehicle, and looked after by a dedicated host who is on WhatsApp throughout.
+                vehicle, and looked after by our dedicated travel team.
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -249,20 +248,17 @@ export default function TourDetailPage({ params }: { params: { slug: string } })
 
                 <div className="mt-6 space-y-2.5">
                   <Button
-                    href={whatsappLink(`Namaste! I'd like to book the "${tour.title}" (${tour.duration}). Could you share availability and next steps?`)}
-                    variant="whatsapp"
+                    href="/contact"
+                    variant="primary"
                     size="lg"
                     className="w-full"
                   >
-                    <IconWhatsApp width={18} height={18} /> Book on WhatsApp
-                  </Button>
-                  <Button href="/contact" variant="primary" size="lg" className="w-full">
-                    Enquire <IconArrow width={16} height={16} />
+                    Submit Tour Inquiry <IconArrow width={18} height={18} />
                   </Button>
                 </div>
 
                 <p className="mt-4 text-center text-xs text-brand-muted">
-                  No payment until your itinerary is confirmed · Free cancellation up to 30 days
+                  No payment required to submit inquiry · Instant notification to our travel team
                 </p>
               </div>
 
@@ -273,12 +269,12 @@ export default function TourDetailPage({ params }: { params: { slug: string } })
                   Not sure if this tour suits your group? Tell us your dates and travel style — we'll tailor it.
                 </p>
                 <Button
-                  href={whatsappLink("Hi! I'm comparing your tours and would like some advice.")}
+                  href="/contact"
                   variant="gold"
                   size="md"
                   className="mt-4 w-full"
                 >
-                  Talk to a planner
+                  Talk to a Travel Specialist <IconArrow width={16} height={16} />
                 </Button>
               </div>
             </div>
@@ -320,11 +316,11 @@ function BookingBar({ tour }: { tour: { title: string; price: number; duration: 
             <div className="font-serif text-xl text-brand-maroon">${tour.price}</div>
           </div>
           <Button
-            href={whatsappLink(`I'd like to book "${tour.title}".`)}
-            variant="whatsapp"
+            href="/contact"
+            variant="primary"
             size="md"
           >
-            <IconWhatsApp width={16} height={16} /> Book Now
+            Book Tour Inquiry <IconArrow width={16} height={16} />
           </Button>
         </div>
       </div>
