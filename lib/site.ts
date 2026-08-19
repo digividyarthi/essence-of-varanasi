@@ -8,8 +8,8 @@ export const brand = {
     'Boutique pilgrimage and cultural tours across Varanasi, Sarnath, Ayodhya, and Prayagraj. Curated by locals, hosted with care.',
   url: 'https://essenceofvaranasi.com',
   email: 'info@essenceofvaranasi.com',
-  phone: '+91 97925 86352',
-  whatsapp: '919792586352',
+  phone: '+91 80047 64122',
+  whatsapp: '918004764122',
   address: 'VASUDEV NAGAR, SA.17/35-29-A, Ganpathi Nagar, Paharia, Varanasi, Uttar Pradesh 221007',
   founded: 2014,
 } as const;

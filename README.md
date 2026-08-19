@@ -73,7 +73,7 @@ the path in the relevant `lib/*.ts` file.
 
 ## WhatsApp integration
 
-Every CTA deep-links to `https://wa.me/919792586352` with a context-aware prefilled
+Every CTA deep-links to `https://wa.me/918004764122` with a context-aware prefilled
 message (per page / per tour / per vehicle). Update the number in `lib/site.ts` → `brand.whatsapp`.
 
 ## Contact form
